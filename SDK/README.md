@@ -4,6 +4,10 @@ Simple SDK for GHO payments
 
 [![MIT License](https://img.shields.io/badge/License-MIT-green.svg)](https://choosealicense.com/licenses/mit/)
 
+# TODO
+
+Added NOTE 's in the whole APP SDK to be modified for the use and development along the SDK
+
 ## Demo
 
 <!-- ![token-gating-demo](https://user-images.githubusercontent.com/91938348/223115760-618d4f09-364f-4352-ae22-68335d7ab03a.gif) -->

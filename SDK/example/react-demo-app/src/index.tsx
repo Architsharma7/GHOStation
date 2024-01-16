@@ -4,7 +4,9 @@ import "./index.css";
 import App from "./App";
 import reportWebVitals from "./reportWebVitals";
 
-import { UniversalGatingWrapper } from "token-gating-sdk";
+// import { UniversalGatingWrapper } from "token-gating-sdk";
+//  NOTE : Import respective new wrapper
+
 import "@rainbow-me/rainbowkit/styles.css";
 
 import { configData } from "./config/config";
@@ -15,9 +17,9 @@ const root = ReactDOM.createRoot(
 );
 root.render(
   <React.StrictMode>
-    <UniversalGatingWrapper config={configData} alchemyApiKey={API_KEY}>
-      <App />
-    </UniversalGatingWrapper>
+    {/* <UniversalGatingWrapper config={configData} alchemyApiKey={API_KEY}> */}
+    <App />
+    {/* </UniversalGatingWrapper> */}
   </React.StrictMode>
 );
 
