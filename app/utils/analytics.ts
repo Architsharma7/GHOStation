@@ -14,7 +14,6 @@ import {
   ChainId,
   GhoService,
 } from "@aave/contract-helpers";
-import * as markets from "@bgd-labs/aave-address-book";
 
 /*/ @dev:every method is performed for sepolia chain /*/
 
@@ -111,12 +110,12 @@ const getUserSummary = async (currentAccount: string) => {
 
   const reserveIncentives =
     await incentiveDataProviderContract.getReservesIncentivesDataHumanized({
-      lendingPoolAddressProvider: "0x6861730cFf157d3Ef3Fe987f526Ec5e1235B2f45", // Goerli GHO Market
+      lendingPoolAddressProvider: "0x6861730cFf157d3Ef3Fe987f526Ec5e1235B2f45", 
     });
 
   const userIncentives =
     await incentiveDataProviderContract.getUserReservesIncentivesDataHumanized({
-      lendingPoolAddressProvider: "0x6861730cFf157d3Ef3Fe987f526Ec5e1235B2f45", // Goerli GHO Market
+      lendingPoolAddressProvider: "0x6861730cFf157d3Ef3Fe987f526Ec5e1235B2f45",
       user: currentAccount,
     });
 

@@ -12,11 +12,14 @@
     "@aave/contract-helpers": "^1.21.1",
     "@aave/math-utils": "^1.21.1",
     "@bgd-labs/aave-address-book": "^2.15.2",
+    "connectkit": "^1.6.0",
     "dayjs": "^1.11.10",
     "ethers": "^5.7.2",
     "next": "14.0.4",
     "react": "^18",
-    "react-dom": "^18"
+    "react-dom": "^18",
+    "viem": "^1.21.4",
+    "wagmi": "^1.4.13"
   },
   "devDependencies": {
     "@types/node": "^20",
