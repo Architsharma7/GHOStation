@@ -12,6 +12,7 @@
     "@aave/contract-helpers": "^1.21.1",
     "@aave/math-utils": "^1.21.1",
     "@bgd-labs/aave-address-book": "^2.15.2",
+    "@metamask/providers": "^14.0.2",
     "connectkit": "^1.6.0",
     "dayjs": "^1.11.10",
     "ethers": "^5.7.2",
