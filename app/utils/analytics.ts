@@ -18,8 +18,7 @@ import {
 /*/ @dev:every method is performed for sepolia chain /*/
 
 const provider = new ethers.providers.JsonRpcProvider(
-  //   "https://eth-mainnet.public.blastapi.io"
-  "https://sepolia.infura.io/v3/ba8a3893f5f34779b1ea295f176a73c6"
+  process.env.NEXT_PUBLIC_RPC_URL
 );
 
 const poolDataProviderContract = new UiPoolDataProvider({
@@ -109,7 +108,7 @@ const getUserSummary = async (currentAccount: `0x${string}`) => {
 
   const reserveIncentives =
     await incentiveDataProviderContract.getReservesIncentivesDataHumanized({
-      lendingPoolAddressProvider: "0x6861730cFf157d3Ef3Fe987f526Ec5e1235B2f45", 
+      lendingPoolAddressProvider: "0x6861730cFf157d3Ef3Fe987f526Ec5e1235B2f45",
     });
 
   const userIncentives =
