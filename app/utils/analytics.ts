@@ -22,31 +22,31 @@ const provider = new ethers.providers.JsonRpcProvider(
 );
 
 const poolDataProviderContract = new UiPoolDataProvider({
-  uiPoolDataProviderAddress: "0x25c682B532CFFDe7E2E657a4Dc9A277d87b5788C",
+  uiPoolDataProviderAddress: "0x69529987FA4A075D0C00B0128fa848dc9ebbE9CE",
   provider,
   chainId: ChainId.sepolia,
 });
 
 const incentiveDataProviderContract = new UiIncentiveDataProvider({
-  uiIncentiveDataProviderAddress: "0xA5c352032806D3F5935eEA7b67Dfe97eCfB0d7Cc",
+  uiIncentiveDataProviderAddress: "0xBA25de9a7DC623B30799F33B770d31B44c2C3b77",
   provider,
   chainId: ChainId.sepolia,
 });
 
 const ghoService = new GhoService({
   provider,
-  uiGhoDataProviderAddress: "0xCC3B9A84d5AbC04fb73B2a8Fa67Be4335d55D594",
+  uiGhoDataProviderAddress: "0x69B9843A16a6E9933125EBD97659BA3CCbE2Ef8A",
 });
 
 // market data method
 const getMarketReserveData = async () => {
   const reserves = await poolDataProviderContract.getReservesHumanized({
-    lendingPoolAddressProvider: "0x6861730cFf157d3Ef3Fe987f526Ec5e1235B2f45",
+    lendingPoolAddressProvider: "0x012bAC54348C0E635dCAc9D5FB99f06F24136C9A",
   });
 
   const reserveIncentives =
     await incentiveDataProviderContract.getReservesIncentivesDataHumanized({
-      lendingPoolAddressProvider: "0x6861730cFf157d3Ef3Fe987f526Ec5e1235B2f45",
+      lendingPoolAddressProvider: "0x012bAC54348C0E635dCAc9D5FB99f06F24136C9A",
     });
 
   const reservesArray = reserves.reservesData;
@@ -99,21 +99,21 @@ const getGHOUserData = async (currentAccount: `0x${string}`) => {
 const getUserSummary = async (currentAccount: `0x${string}`) => {
   const currentTimestamp = dayjs().unix();
   const reserves = await poolDataProviderContract.getReservesHumanized({
-    lendingPoolAddressProvider: "0x6861730cFf157d3Ef3Fe987f526Ec5e1235B2f45",
+    lendingPoolAddressProvider: "0x012bAC54348C0E635dCAc9D5FB99f06F24136C9A",
   });
   const userReserves = await poolDataProviderContract.getUserReservesHumanized({
-    lendingPoolAddressProvider: "0x6861730cFf157d3Ef3Fe987f526Ec5e1235B2f45",
+    lendingPoolAddressProvider: "0x012bAC54348C0E635dCAc9D5FB99f06F24136C9A",
     user: currentAccount,
   });
 
   const reserveIncentives =
     await incentiveDataProviderContract.getReservesIncentivesDataHumanized({
-      lendingPoolAddressProvider: "0x6861730cFf157d3Ef3Fe987f526Ec5e1235B2f45",
+      lendingPoolAddressProvider: "0x012bAC54348C0E635dCAc9D5FB99f06F24136C9A",
     });
 
   const userIncentives =
     await incentiveDataProviderContract.getUserReservesIncentivesDataHumanized({
-      lendingPoolAddressProvider: "0x6861730cFf157d3Ef3Fe987f526Ec5e1235B2f45",
+      lendingPoolAddressProvider: "0x012bAC54348C0E635dCAc9D5FB99f06F24136C9A",
       user: currentAccount,
     });
 
