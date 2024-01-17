@@ -2,9 +2,12 @@ import {
   formatReservesAndIncentives,
   formatGhoReserveData,
   formatGhoUserData,
+  formatUserSummaryAndIncentives,
+  formatUserSummaryWithDiscount,
 } from "@aave/math-utils";
 import dayjs from "dayjs";
 import { ethers } from "ethers";
+import { formatUnits } from "ethers/lib/utils";
 import {
   UiPoolDataProvider,
   UiIncentiveDataProvider,
@@ -19,7 +22,6 @@ const provider = new ethers.providers.JsonRpcProvider(
   //   "https://eth-mainnet.public.blastapi.io"
   ""
 );
-// const currentAccount = "";
 
 const poolDataProviderContract = new UiPoolDataProvider({
   uiPoolDataProviderAddress: "0x25c682B532CFFDe7E2E657a4Dc9A277d87b5788C",
@@ -94,4 +96,68 @@ const getGHOUserData = async (currentAccount: string) => {
 
   console.log(formattedGhoUserData);
   return formattedGhoUserData;
+};
+
+// user data method
+const getUserSummary = async (currentAccount: string) => {
+  const currentTimestamp = dayjs().unix();
+  const reserves = await poolDataProviderContract.getReservesHumanized({
+    lendingPoolAddressProvider: "0x6861730cFf157d3Ef3Fe987f526Ec5e1235B2f45",
+  });
+  const userReserves = await poolDataProviderContract.getUserReservesHumanized({
+    lendingPoolAddressProvider: "0x6861730cFf157d3Ef3Fe987f526Ec5e1235B2f45",
+    user: currentAccount,
+  });
+
+  const reserveIncentives =
+    await incentiveDataProviderContract.getReservesIncentivesDataHumanized({
+      lendingPoolAddressProvider: "0x6861730cFf157d3Ef3Fe987f526Ec5e1235B2f45", // Goerli GHO Market
+    });
+
+  const userIncentives =
+    await incentiveDataProviderContract.getUserReservesIncentivesDataHumanized({
+      lendingPoolAddressProvider: "0x6861730cFf157d3Ef3Fe987f526Ec5e1235B2f45", // Goerli GHO Market
+      user: currentAccount,
+    });
+
+  const poolReserve = await getMarketReserveData();
+  const userSummary = formatUserSummaryAndIncentives({
+    currentTimestamp,
+    marketReferencePriceInUsd:
+      reserves.baseCurrencyData.marketReferenceCurrencyPriceInUsd,
+    marketReferenceCurrencyDecimals:
+      reserves.baseCurrencyData.marketReferenceCurrencyDecimals,
+    userReserves: userReserves.userReserves,
+    formattedReserves: poolReserve,
+    userEmodeCategoryId: userReserves.userEmodeCategoryId,
+    reserveIncentives: reserveIncentives,
+    userIncentives: userIncentives,
+  });
+
+  let formattedUserSummary = userSummary;
+  const ghoUserData = await getGHOUserData(currentAccount);
+  // Factor discounted GHO interest into cumulative user fields
+  if (ghoUserData.userDiscountedGhoInterest > 0) {
+    const userSummaryWithDiscount = formatUserSummaryWithDiscount({
+      userGhoDiscountedInterest: ghoUserData.userDiscountedGhoInterest,
+      user: userSummary,
+      marketReferenceCurrencyPriceUSD: Number(
+        formatUnits(
+          reserves.baseCurrencyData.marketReferenceCurrencyPriceInUsd,
+          6
+        )
+      ),
+    });
+    formattedUserSummary = {
+      ...userSummary,
+      ...userSummaryWithDiscount,
+    };
+  }
+};
+
+export {
+  getMarketReserveData,
+  getGHOReserveData,
+  getGHOUserData,
+  getUserSummary,
 };

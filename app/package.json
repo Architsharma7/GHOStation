@@ -13,6 +13,7 @@
     "@aave/math-utils": "^1.21.1",
     "@bgd-labs/aave-address-book": "^2.15.2",
     "dayjs": "^1.11.10",
+    "ethers": "^5.7.2",
     "next": "14.0.4",
     "react": "^18",
     "react-dom": "^18"
