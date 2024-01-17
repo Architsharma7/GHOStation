@@ -2,11 +2,69 @@ import Image from "next/image";
 import { Inter } from "next/font/google";
 import { ConnectKitButton } from "connectkit";
 import { useAccount } from "wagmi";
+import {
+  getMarketReserveData,
+  getGHOReserveData,
+  getGHOUserData,
+  getUserSummary,
+} from "@/utils/analytics";
+import { useState } from "react";
 
 const inter = Inter({ subsets: ["latin"] });
 
 export default function Home() {
   const { address, isConnecting, isDisconnected } = useAccount();
+  const [GHOMarketData, setGHOMarketData] = useState<any>(null);
+  const [ghoReserveData, setGhoReserveData] = useState<any>(null);
+  const [ghoUserData, setGhoUserData] = useState<any>(null);
+  const [userSummary, setUserSummary] = useState<any>(null);
+
+  const getGHOMarketData = async () => {
+    try {
+      const MarketData = await getMarketReserveData();
+      const GHOMarketdata = MarketData.find(
+        (token) => token.name === "Gho Token"
+      );
+      console.log(GHOMarketdata);
+      setGHOMarketData(GHOMarketdata);
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
+  const getGHOReserve = async () => {
+    try {
+      const data = await getGHOReserveData();
+      console.log(data);
+      setGhoReserveData(data);
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
+  const getUserData = async () => {
+    try {
+      if (address) {
+        const data = getGHOUserData(address);
+        console.log(data);
+        setGhoUserData(data);
+      }
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
+  const getUsersummary = async () => {
+    try {
+      if (address) {
+        const data = await getUserSummary(address);
+        console.log(data);
+        setUserSummary(data);
+      }
+    } catch (error) {
+      console.log(error);
+    }
+  };
   return (
     <main
       className={`flex min-h-screen flex-col items-center justify-between p-24 ${inter.className}`}
@@ -19,6 +77,10 @@ export default function Home() {
         <ConnectKitButton />
         {address && <p>{address}</p>}
         <div className="fixed bottom-0 left-0 flex h-48 w-full items-end justify-center bg-gradient-to-t from-white via-white dark:from-black dark:via-black lg:static lg:h-auto lg:w-auto lg:bg-none">
+          <button onClick={() => getGHOMarketData()}>getMarketData</button>
+          <button onClick={() => getGHOReserve()}>getGHOReserveData</button>
+          <button onClick={() => getUserData()}>getGHOUserData</button>
+          <button onClick={() => getUsersummary()}>getUserSummary</button>
           <a
             className="pointer-events-none flex place-items-center gap-2 p-8 lg:pointer-events-auto lg:p-0"
             href="https://vercel.com?utm_source=create-next-app&utm_medium=default-template-tw&utm_campaign=create-next-app"

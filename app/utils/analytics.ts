@@ -19,7 +19,7 @@ import {
 
 const provider = new ethers.providers.JsonRpcProvider(
   //   "https://eth-mainnet.public.blastapi.io"
-  ""
+  "https://sepolia.infura.io/v3/ba8a3893f5f34779b1ea295f176a73c6"
 );
 
 const poolDataProviderContract = new UiPoolDataProvider({
@@ -70,9 +70,8 @@ const getMarketReserveData = async () => {
 };
 
 // GHO reserve data method
-const getGHOReserveData = async (currentAccount: string) => {
+const getGHOReserveData = async () => {
   const ghoReserveData = await ghoService.getGhoReserveData();
-  const ghoUserData = await ghoService.getGhoUserData(currentAccount);
   const formattedGhoReserveData = formatGhoReserveData({
     ghoReserveData,
   });
@@ -82,7 +81,7 @@ const getGHOReserveData = async (currentAccount: string) => {
 };
 
 // GHO user data method
-const getGHOUserData = async (currentAccount: string) => {
+const getGHOUserData = async (currentAccount: `0x${string}`) => {
   const ghoReserveData = await ghoService.getGhoReserveData();
   const ghoUserData = await ghoService.getGhoUserData(currentAccount);
   const currentTimestamp = dayjs().unix();
@@ -98,7 +97,7 @@ const getGHOUserData = async (currentAccount: string) => {
 };
 
 // user data method
-const getUserSummary = async (currentAccount: string) => {
+const getUserSummary = async (currentAccount: `0x${string}`) => {
   const currentTimestamp = dayjs().unix();
   const reserves = await poolDataProviderContract.getReservesHumanized({
     lendingPoolAddressProvider: "0x6861730cFf157d3Ef3Fe987f526Ec5e1235B2f45",
@@ -152,6 +151,8 @@ const getUserSummary = async (currentAccount: string) => {
       ...userSummaryWithDiscount,
     };
   }
+  console.log(formattedUserSummary);
+  return formattedUserSummary;
 };
 
 export {
