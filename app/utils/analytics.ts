@@ -1,14 +1,19 @@
-import { formatReservesAndIncentives } from "@aave/math-utils";
+import {
+  formatReservesAndIncentives,
+  formatGhoReserveData,
+  formatGhoUserData,
+} from "@aave/math-utils";
 import dayjs from "dayjs";
 import { ethers } from "ethers";
 import {
   UiPoolDataProvider,
   UiIncentiveDataProvider,
   ChainId,
+  GhoService,
 } from "@aave/contract-helpers";
 import * as markets from "@bgd-labs/aave-address-book";
 
-// every method is performed for sepolia chain
+/*/ @dev:every method is performed for sepolia chain /*/
 
 const provider = new ethers.providers.JsonRpcProvider(
   //   "https://eth-mainnet.public.blastapi.io"
@@ -28,9 +33,13 @@ const incentiveDataProviderContract = new UiIncentiveDataProvider({
   chainId: ChainId.sepolia,
 });
 
-// market data methods
+const ghoService = new GhoService({
+  provider,
+  uiGhoDataProviderAddress: "0xCC3B9A84d5AbC04fb73B2a8Fa67Be4335d55D594",
+});
 
-const getMarketData = async () => {
+// market data method
+const getMarketReserveData = async () => {
   const reserves = await poolDataProviderContract.getReservesHumanized({
     lendingPoolAddressProvider: "0x6861730cFf157d3Ef3Fe987f526Ec5e1235B2f45",
   });
@@ -52,9 +61,37 @@ const getMarketData = async () => {
       baseCurrencyData.marketReferenceCurrencyDecimals,
     marketReferencePriceInUsd:
       baseCurrencyData.marketReferenceCurrencyPriceInUsd,
-    reserveIncentives : reserveIncentives,
+    reserveIncentives: reserveIncentives,
   });
 
   console.log(formattedPoolReserves);
   return formattedPoolReserves;
+};
+
+// GHO reserve data method
+const getGHOReserveData = async (currentAccount: string) => {
+  const ghoReserveData = await ghoService.getGhoReserveData();
+  const ghoUserData = await ghoService.getGhoUserData(currentAccount);
+  const formattedGhoReserveData = formatGhoReserveData({
+    ghoReserveData,
+  });
+
+  console.log(formattedGhoReserveData);
+  return formattedGhoReserveData;
+};
+
+// GHO user data method
+const getGHOUserData = async (currentAccount: string) => {
+  const ghoReserveData = await ghoService.getGhoReserveData();
+  const ghoUserData = await ghoService.getGhoUserData(currentAccount);
+  const currentTimestamp = dayjs().unix();
+
+  const formattedGhoUserData = formatGhoUserData({
+    ghoReserveData,
+    ghoUserData,
+    currentTimestamp,
+  });
+
+  console.log(formattedGhoUserData);
+  return formattedGhoUserData;
 };
