@@ -1,7 +1,7 @@
 import Image from "next/image";
 import { Inter } from "next/font/google";
 import { ConnectKitButton } from "connectkit";
-import { useAccount } from "wagmi";
+import { useAccount, usePublicClient } from "wagmi";
 import {
   getMarketReserveData,
   getGHOReserveData,
@@ -9,6 +9,8 @@ import {
   getUserSummary,
 } from "@/utils/analytics";
 import { useState } from "react";
+import { borrowGHO, repayGHO } from "@/utils/operations";
+import { InterestRate } from "@aave/contract-helpers";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -18,6 +20,7 @@ export default function Home() {
   const [ghoReserveData, setGhoReserveData] = useState<any>(null);
   const [ghoUserData, setGhoUserData] = useState<any>(null);
   const [userSummary, setUserSummary] = useState<any>(null);
+  const provider = usePublicClient();
 
   const getGHOMarketData = async () => {
     try {
@@ -180,6 +183,23 @@ export default function Home() {
           </p>
         </a>
       </div>
+      <button
+        onClick={() =>
+          borrowGHO(
+            address,
+            "0.1",
+            InterestRate.Stable,
+            "0xdCA691FB9609aB814E59c62d70783da1c056A9b6"
+          )
+        }
+      >
+        borrow
+      </button>
+      <button
+        onClick={() => repayGHO(address, "0.1", InterestRate.Stable)}
+      >
+        repay
+      </button>
     </main>
   );
 }
