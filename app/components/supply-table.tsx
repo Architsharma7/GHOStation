@@ -10,10 +10,7 @@ import {
 import { Card } from "./ui/card";
 import { Badge } from "./ui/badge";
 import { ArrowRight } from "lucide-react";
-import VaultDeposit from "./vault-deposit";
-import { Button } from "./ui/button";
-import ViewPoolDetails from "./view-pool-details";
-import SupplyModal from "./supply-modal";
+import TokenPairSupplyModal from "./token-pair-supply-modal";
 
 const data = [
   {
@@ -66,7 +63,7 @@ const data = [
 export default function SupplyTable() {
   return (
     <Card className=" border-0 border-neutral-300 shadow-[0_3px_10px_rgb(0,0,0,0.2)] gradient min-h-96 p-6 px-8 rounded-xl space-y-3 ">
-      <h1 className=" text-xl font-semibold tracking-wide">Supply</h1>
+      <h1 className=" text-xl font-semibold tracking-wide">Supply Pairs</h1>
       <Table className=" w-full  ">
         <TableHeader className=" ">
           <TableRow className=" ">
@@ -97,7 +94,7 @@ export default function SupplyTable() {
               <TableCell className="">{row.poolValue}</TableCell>
               <TableCell>{row.apr}</TableCell>
               <TableCell className=" w-40">
-                <SupplyModal />
+                <TokenPairSupplyModal />
               </TableCell>
             </TableRow>
           ))}

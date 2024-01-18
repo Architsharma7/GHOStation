@@ -22,7 +22,7 @@ import {
 import Loader from "./ui/loader";
 import { ConnectKitButton } from "connectkit";
 import CustomConnectButton from "./custom-connect-btn";
-import SupplyModal from "./supply-modal";
+import SupplyModal from "./token-pair-supply-modal";
 import BorrowModal from "./borrow-modal";
 import { Separator } from "./ui/separator";
 
@@ -60,7 +60,7 @@ export default function ViewPoolDetails() {
                 </div>
               </div>
               <div>
-                <SupplyModal />
+                {/* <SupplyModal /> */}
               </div>
             </div>
             <div className=" flex items-start justify-between ">
@@ -77,15 +77,7 @@ export default function ViewPoolDetails() {
             </div>
           </Card>
         </div>
-        <div className=" mt-3 w-full">
-          {isConnected ? (
-            <Button variant={"custom"} className=" w-full ">
-              Initiate Transaction <Loader />
-            </Button>
-          ) : (
-            <CustomConnectButton className="w-full rounded-lg" />
-          )}
-        </div>
+        
       </DialogContent>
     </Dialog>
   );

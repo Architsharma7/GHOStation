@@ -2,7 +2,7 @@ import React from "react";
 import { Card } from "./ui/card";
 import { Separator } from "./ui/separator";
 import { Coins, Wallet2Icon } from "lucide-react";
-import SupplyModal from "./supply-modal";
+import SupplyModal from "./token-pair-supply-modal";
 import BorrowModal from "./borrow-modal";
 import { useAccount, useBalance } from "wagmi";
 import { Input } from "./ui/input";
@@ -16,7 +16,7 @@ export default function Vault() {
   });
   return (
     <div>
-      <Card className=" gradient rounded-xl  shadow-[0_3px_10px_rgb(0,0,0,0.2)] border-0 p-5  ">
+      <Card className=" gradien bg-white rounded-xl  shadow-[0_3px_10px_rgb(0,0,0,0.2)] border-0 p-5  ">
         <div className=" flex items-center justify-between">
           <div className=" flex items-center gap-3">
             <Coins className=" h-6 w-6" />
@@ -52,7 +52,7 @@ export default function Vault() {
             <div>Withdraw</div>
             <Input placeholder="e.g: 10" />
           </div>
-          <Button className=" w-28" variant={"default"}>
+          <Button className=" w-28" variant={"custom"}>
             Withdraw
           </Button>
         </div>

@@ -70,7 +70,7 @@ export default function DashboardCharts() {
   return (
     <Card className="  bg-white  w-fit rounded-xl shadow-[0_3px_10px_rgb(0,0,0,0.2)] border-0 p-5  ">  
       <AreaChart
-        width={730}
+        width={630}
         height={300}
         data={data}
         margin={{ top: 10, right: 30, left: 0, bottom: 0 }}
