@@ -6,6 +6,11 @@
 
 html {
     font-family: 'Raleway', sans-serif;
-    background: radial-gradient(50% 50% at 50% 50%,#dbd2ef 0,#efeaf9 100%);
-    background-image: radial-gradient(50% 50% at 50% 50%, rgb(219, 210, 239) 0px, rgb(239, 234, 249) 100%);
+    background: radial-gradient(50% 50% at 50% 50%, #dbd2ef 0, #efeaf9 100%);
+    background-image: radial-gradient(50% 50% at 50% 50%, #dbd2ef 0px, #efeaf9 100%);
+}
+
+.gradient {
+    background: radial-gradient(50% 50% at 50% 50%, #dbd2ef 0, #efeaf9 100%);
+    background-image: radial-gradient(50% 50% at 50% 50%, #dbd2ef 0px, #efeaf9 100%);
 }
