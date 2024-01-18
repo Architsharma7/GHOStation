@@ -1,19 +1,16 @@
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
-import SupplyModal from "./token-pair-supply-modal";
-import BorrowModal from "./borrow-modal";
-import VaultDeposit from "./vault-deposit";
 import Pools from "./pools";
 import SupplyTable from "./supply-table";
-import VaultStats from "./vault-stats";
 import Vault from "./vault";
 import DashboardCharts from "./dashboard-charts";
-import Borrow from "./borrow";
-import Deposit from "./deposit";
 import MintGHO from "./mint-gho";
+import { Card } from "./ui/card";
+import ghost from "@/assets/ghost.png";
+import Image from "next/image";
 
 export default function DashboardTabs() {
   return (
-    <Tabs defaultValue="dashboard">
+    <Tabs defaultValue="dashboard" className="relative z-40">
       <TabsList className=" ">
         <TabsTrigger className="rounded-md" value="dashboard">
           Dashboard
@@ -25,44 +22,43 @@ export default function DashboardTabs() {
           Earn
         </TabsTrigger>
       </TabsList>
-      <TabsContent value="dashboard" className="py-8">
-        <div className=" space-x-2 flex items-start justify-between">
-          <div className=" w-7/12">
-            <DashboardCharts />
-          </div>
-          <div className=" w-5/12">
-            <MintGHO />
-          </div>
-        </div>
-      </TabsContent>
-      <TabsContent value="tools" className="py-8">
-        <div className=" flex items-start gap-10 justify-between">
-          <div className=" w-5/12 flex flex-col gap-5">
-            <div>
-              <Borrow />
-            </div>
-            <div>
-              <Deposit />
+      <div className=" z-10">
+        <TabsContent value="dashboard" className="py-8 z-10">
+          <div className=" space-x-2 flex items-start justify-between">
+            <div className=" w-7/12">
+              <DashboardCharts />
             </div>
           </div>
-          <div className=" w-7/12">
-            <SupplyTable />
-          </div>
+        </TabsContent>
+        <TabsContent value="tools" className="py-8">
+          <div className=" flex items-start gap-10 justify-between">
+            <div className="space-y-8 w-5/12">
+              <Card className="border-0 flex-col  flex items-stretch justify-center border-neutral-300 shadow-[0_3px_10px_rgb(0,0,0,0.2)] bg-white min-h-96 p-6 px-8 rounded-xl space-y-3 ">
+                Mint GHO and Supply GHO token pairs
+              </Card>
+              <MintGHO />
+            </div>
+            <div className=" w-7/12">
+              <SupplyTable />
+            </div>
 
-          {/* <VaultDeposit /> */}
-        </div>
-      </TabsContent>
-      <TabsContent
-        value="earn"
-        className=" flex items-start justify-normal gap-12 py-8"
-      >
-        <div className=" w-5/12">
-          <Vault />
-        </div>
-        <div className=" w-7/12">
-          <Pools />
-        </div>
-      </TabsContent>
+            {/* <VaultDeposit /> */}
+          </div>
+        </TabsContent>
+        <TabsContent
+          value="earn"
+          className=" flex items-start justify-normal gap-12 py-8"
+        >
+          <div className=" w-5/12">
+            <Vault />
+          </div>
+          <div className=" w-7/12">
+            <Pools />
+          </div>
+        </TabsContent>
+      </div>
+      <Image src={ghost} alt="ghost" className="absolute top-16 left-14 -z-10 w-80" />
+      <Image src={ghost} alt="ghost" className="absolute -top-16 transform -scale-x-100 -right-20 -z-10 w-80 -scale-1 " />
     </Tabs>
   );
 }
