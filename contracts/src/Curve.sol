@@ -5,7 +5,9 @@ import "@openzeppelin/contracts/token/ERC721/IERC721Receiver.sol";
 import "@uniswap/v3-periphery/contracts/libraries/TransferHelper.sol";
 import "./interfaces/ICurvePool.sol";
 
+// https://curve.fi/#/ethereum/pools/factory-crvusd-8/deposit
 // https://docs.uniswap.org/contracts/v3/guides/providing-liquidity/increase-liquidity
+// https://etherscan.io/address/0x86152df0a0e321afb3b0b9c4deb813184f365ada#code
 
 contract CurveMethods is IERC721Receiver {
     ICurvePool public immutable curvePool;
@@ -68,7 +70,7 @@ contract CurveMethods is IERC721Receiver {
 
     function removeLiquidity(uint burn_amount, address receiver) external {
         // Note that the pool defined by DAI/USDC and fee tier 0.3% must already be created and initialized in order to mint
-        (tokenId, liquidity, amount0, amount1) = curvePool.remove_liquidity(
+        (amount0, amount1) = curvePool.remove_liquidity(
             burn_amount,
             [0, 0],
             receiver

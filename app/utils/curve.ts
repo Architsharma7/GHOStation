@@ -6,6 +6,8 @@ const CURVE_POOL_ADDRESS = "0x86152dF0a0E321Afb3B0B9C4deb813184F365ADa";
 import { getAccount, getPublicClient, getWalletClient } from "wagmi/actions";
 import { getContract, parseEther } from "viem";
 
+// https://resources.curve.fi/reward-gauges/understanding-gauges/#the-dao
+// https://docs.curve.fi/stableswap-exchange/stableswap-ng/pools/plainpool/?h=#remove_liquidity
 async function addLiquidityCurvePool() {
   const { address: account } = getAccount();
   const publicClient = getPublicClient();
