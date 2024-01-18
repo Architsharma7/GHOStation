@@ -15,7 +15,7 @@ export default function MintGHO() {
     address,
   });
   return (
-    <Card className="border-0 h-[340px] border-neutral-300 shadow-[0_3px_10px_rgb(0,0,0,0.2)] bg-white min-h-96 p-6 px-8 rounded-xl space-y-3 ">
+    <Card className="border-0 h-[346px] flex-col  flex items-stretch justify-center border-neutral-300 shadow-[0_3px_10px_rgb(0,0,0,0.2)] bg-white min-h-96 p-6 px-8 rounded-xl space-y-3 ">
       <CardHeader className=" p-0">
         <CardTitle>Mint GHO</CardTitle>
         <CardDescription>
