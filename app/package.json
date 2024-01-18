@@ -12,11 +12,22 @@
     "@aave/contract-helpers": "^1.21.1",
     "@aave/math-utils": "^1.21.1",
     "@bgd-labs/aave-address-book": "^2.15.2",
+    "@radix-ui/react-slot": "^1.0.2",
+    "@radix-ui/react-tabs": "^1.0.4",
+    "class-variance-authority": "^0.7.0",
+    "clsx": "^2.1.0",
+    "connectkit": "^1.6.0",
     "dayjs": "^1.11.10",
     "ethers": "^5.7.2",
+    "geist": "^1.2.1",
+    "lucide-react": "^0.311.0",
     "next": "14.0.4",
     "react": "^18",
-    "react-dom": "^18"
+    "react-dom": "^18",
+    "tailwind-merge": "^2.2.0",
+    "tailwindcss-animate": "^1.0.7",
+    "viem": "1.x",
+    "wagmi": "1.x"
   },
   "devDependencies": {
     "@types/node": "^20",
