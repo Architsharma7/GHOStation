@@ -70,9 +70,9 @@ export default function Home() {
     }
   };
   return (
-    <main className="min-h-screen">
+    <main className="min-h-[80vh]">
       <DashboardTabs/>
-      <div className="space-x-4 ">
+      {/* <div className="space-x-4 ">
         <button onClick={() => getGHOMarketData()}>getMarketData</button>
         <button onClick={() => getGHOReserve()}>getGHOReserveData</button>
         <button onClick={() => getUserData()}>getGHOUserData</button>
@@ -94,7 +94,7 @@ export default function Home() {
         <button onClick={() => repayGHO(address, "0.1", InterestRate.Stable)}>
           repay
         </button>
-      </div>
+      </div> */}
     </main>
   );
 }
