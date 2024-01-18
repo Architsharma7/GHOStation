@@ -1,5 +1,7 @@
 // balancer code to interact via an SDK
 // Deposit assets into the pool and stake to earn extra interest
+// https://docs.balancer.fi/sdk/technical-reference/liquidity-provisioning.html
+
 import { BalancerSDK, BalancerSdkConfig, Network } from "@balancer-labs/sdk";
 
 const config: BalancerSdkConfig = {
