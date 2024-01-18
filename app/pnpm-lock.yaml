@@ -11,6 +11,9 @@ dependencies:
   '@aave/math-utils':
     specifier: ^1.21.1
     version: 1.21.1(bignumber.js@9.1.2)(tslib@2.6.2)
+  '@balancer-labs/sdk':
+    specifier: ^1.1.5
+    version: 1.1.5
   '@bgd-labs/aave-address-book':
     specifier: ^2.15.2
     version: 2.15.2
@@ -402,6 +405,50 @@ packages:
       to-fast-properties: 2.0.0
     dev: false
 
+  /@balancer-labs/sdk@1.1.5:
+    resolution: {integrity: sha512-Hxmo1u8qJureQxdbVAMAkN9qceeZxcKx4QjoevTDMrSGY5H9jc1hX18p9TTZXwlGAkw8n4rdErydUgsdWjWuLA==}
+    dependencies:
+      '@balancer-labs/sor': 4.1.1-beta.16(@ethersproject/abi@5.7.0)(@ethersproject/address@5.7.0)(@ethersproject/bignumber@5.7.0)(@ethersproject/constants@5.7.0)(@ethersproject/contracts@5.7.0)(@ethersproject/providers@5.7.2)
+      '@ethersproject/abi': 5.7.0
+      '@ethersproject/abstract-signer': 5.7.0
+      '@ethersproject/address': 5.7.0
+      '@ethersproject/base64': 5.5.0
+      '@ethersproject/bignumber': 5.7.0
+      '@ethersproject/bytes': 5.7.0
+      '@ethersproject/constants': 5.7.0
+      '@ethersproject/contracts': 5.7.0
+      '@ethersproject/providers': 5.7.2
+      axios: 0.24.0
+      graphql: 15.8.0
+      graphql-request: 3.7.0(graphql@15.8.0)
+      json-to-graphql-query: 2.2.5
+      lodash: 4.17.21
+    transitivePeerDependencies:
+      - bufferutil
+      - debug
+      - encoding
+      - utf-8-validate
+    dev: false
+
+  /@balancer-labs/sor@4.1.1-beta.16(@ethersproject/abi@5.7.0)(@ethersproject/address@5.7.0)(@ethersproject/bignumber@5.7.0)(@ethersproject/constants@5.7.0)(@ethersproject/contracts@5.7.0)(@ethersproject/providers@5.7.2):
+    resolution: {integrity: sha512-EKS7J78r5jKDsGqOs2gzIyhOqYyDAmrwp/nY2bSsfymNXSTr7g3YS418UJl1hSQMBEeN4N2MnH0neM1oJxHHoQ==}
+    peerDependencies:
+      '@ethersproject/abi': ^5.4.1
+      '@ethersproject/address': ^5.4.0
+      '@ethersproject/bignumber': ^5.4.2
+      '@ethersproject/constants': ^5.4.0
+      '@ethersproject/contracts': ^5.4.1
+      '@ethersproject/providers': ^5.4.4
+    dependencies:
+      '@ethersproject/abi': 5.7.0
+      '@ethersproject/address': 5.7.0
+      '@ethersproject/bignumber': 5.7.0
+      '@ethersproject/constants': 5.7.0
+      '@ethersproject/contracts': 5.7.0
+      '@ethersproject/providers': 5.7.2
+      isomorphic-fetch: 2.2.1
+    dev: false
+
   /@bgd-labs/aave-address-book@2.15.2:
     resolution: {integrity: sha512-OrKzdc2y5QIKqviQD/AI3cugGNOuYsGF/mJ5Uo2E77mmCxF/lcNnupfOthednVEfkCvUadDeOAR2wst0Fj3/Jw==}
     dev: false
@@ -589,6 +636,12 @@ packages:
       '@ethersproject/keccak256': 5.7.0
       '@ethersproject/logger': 5.7.0
       '@ethersproject/rlp': 5.7.0
+    dev: false
+
+  /@ethersproject/base64@5.5.0:
+    resolution: {integrity: sha512-tdayUKhU1ljrlHzEWbStXazDpsx4eg1dBXUSI6+mHlYklOXoXF6lZvw8tnD6oVaWfnMxAgRSKROg3cVKtCcppA==}
+    dependencies:
+      '@ethersproject/bytes': 5.7.0
     dev: false
 
   /@ethersproject/base64@5.7.0:
@@ -3725,6 +3778,14 @@ packages:
       - debug
     dev: false
 
+  /axios@0.24.0:
+    resolution: {integrity: sha512-Q6cWsys88HoPgAaFAVUb0WpPk0O8iTeisR9IMqy9G8AbO4NlpVknrnQS03zzF9PGAWgO3cgletO3VjV/P7VztA==}
+    dependencies:
+      follow-redirects: 1.15.5(debug@4.3.4)
+    transitivePeerDependencies:
+      - debug
+    dev: false
+
   /axobject-query@3.2.1:
     resolution: {integrity: sha512-jsyHu61e6N4Vbz/v18DHwWYKK0bSWLqn47eeDSKPB7m8tqMHF9YJ+mhIk2lVteyZrY8tnSj/jHOv4YiTCuCJgg==}
     dependencies:
@@ -4583,6 +4644,12 @@ packages:
 
   /encode-utf8@1.0.3:
     resolution: {integrity: sha512-ucAnuBEhUK4boH2HjVYG5Q2mQyPorvv0u/ocS+zhdw0S8AlHYY+GOFhP1Gio5z4icpP2ivFSvhtFjQi8+T9ppw==}
+    dev: false
+
+  /encoding@0.1.13:
+    resolution: {integrity: sha512-ETBauow1T35Y/WZMkio9jiM0Z5xjHHmJ4XmjZOq1l/dXz3lr2sRn87nJy20RupqSh1F2m3HHPSp8ShIPQJrJ3A==}
+    dependencies:
+      iconv-lite: 0.6.3
     dev: false
 
   /end-of-stream@1.4.4:
@@ -5808,6 +5875,13 @@ packages:
       safer-buffer: 2.1.2
     dev: false
 
+  /iconv-lite@0.6.3:
+    resolution: {integrity: sha512-4fCk79wshMdzMp2rH06qWrJE4iolqLhCUH+OiuIgU++RB0+94NlDL81atO7GX55uUKueo0txHNtvEyI6D7WdMw==}
+    engines: {node: '>=0.10.0'}
+    dependencies:
+      safer-buffer: 2.1.2
+    dev: false
+
   /idb-keyval@6.2.1:
     resolution: {integrity: sha512-8Sb3veuYCyrZL+VBt9LJfZjLUPWVvqn8tG28VqYNFCo43KHcKuq+b4EiXGeuaLAQWL2YmyDgMp2aSpH9JHsEQg==}
     dev: false
@@ -6056,6 +6130,11 @@ packages:
       call-bind: 1.0.5
     dev: true
 
+  /is-stream@1.1.0:
+    resolution: {integrity: sha512-uQPm8kcs47jx38atAcWTVxyltQYoPT68y9aWYdV6yWXSyW8mzSat0TL6CiWdZeCdF3KrAvpVtnHbTv4RN+rqdQ==}
+    engines: {node: '>=0.10.0'}
+    dev: false
+
   /is-stream@2.0.1:
     resolution: {integrity: sha512-hFoiJiTl63nn+kstHGBtewWSKnQLpyb155KHheA1l39uvtO9nWIop1p3udqPcUd/xbF1VLMO4n7OI6p7RbngDg==}
     engines: {node: '>=8'}
@@ -6145,6 +6224,13 @@ packages:
     engines: {node: '>=0.10.0'}
     dependencies:
       isarray: 1.0.0
+
+  /isomorphic-fetch@2.2.1:
+    resolution: {integrity: sha512-9c4TNAKYXM5PRyVcwUZrF3W09nQ+sO7+jydgs4ZGW9dhsLG2VOlISJABombdQqQRXCwuYG3sYV/puGf5rp0qmA==}
+    dependencies:
+      node-fetch: 1.7.3
+      whatwg-fetch: 3.6.20
+    dev: false
 
   /isomorphic-unfetch@3.1.0:
     resolution: {integrity: sha512-geDJjpoZ8N0kWexiwkX8F9NkTsXhetLPVbZFQ+JTW239QNOwvB0gniuR1Wc6f0AMTn7/mFGyXvHTifrCp/GH8Q==}
@@ -6280,6 +6366,10 @@ packages:
 
   /json-stringify-safe@5.0.1:
     resolution: {integrity: sha512-ZClg6AaYvamvYEE82d3Iyd3vSSIjQ+odgjaTzRuO3s7toCdFKczob2i0zCh7JE8kWn17yvAWhUVxvqGwUalsRA==}
+    dev: false
+
+  /json-to-graphql-query@2.2.5:
+    resolution: {integrity: sha512-5Nom9inkIMrtY992LMBBG1Zaekrc10JaRhyZgprwHBVMDtRgllTvzl0oBbg13wJsVZoSoFNNMaeIVQs0P04vsA==}
     dev: false
 
   /json5@1.0.2:
@@ -6849,6 +6939,13 @@ packages:
 
   /node-fetch-native@1.6.1:
     resolution: {integrity: sha512-bW9T/uJDPAJB2YNYEpWzE54U5O3MQidXsOyTfnbKYtTtFexRvGzb1waphBN4ZwP6EcIvYYEOwW0b72BpAqydTw==}
+    dev: false
+
+  /node-fetch@1.7.3:
+    resolution: {integrity: sha512-NhZ4CsKx7cYm2vSrBAr2PvFOe6sWDf0UYLRqA6svUYg7+/TSfVAu49jYC4BvQ4Sms9SZgdqGBgroqfDhJdTyKQ==}
+    dependencies:
+      encoding: 0.1.13
+      is-stream: 1.1.0
     dev: false
 
   /node-fetch@2.7.0:
@@ -8766,6 +8863,10 @@ packages:
 
   /webidl-conversions@3.0.1:
     resolution: {integrity: sha512-2JAn3z8AR6rjK8Sm8orRC0h/bcl/DqL7tRPdGZ4I1CjdF+EaMLmYxBHyXuKL849eucPFhvBoxMsflfOb8kxaeQ==}
+    dev: false
+
+  /whatwg-fetch@3.6.20:
+    resolution: {integrity: sha512-EqhiFU6daOA8kpjOWTL0olhVOF3i7OrFzSYiGsEMB8GcXS+RrzauAERX65xMeNWVqxA6HXH2m69Z9LaKKdisfg==}
     dev: false
 
   /whatwg-url@5.0.0:
