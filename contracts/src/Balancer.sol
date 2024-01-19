@@ -9,7 +9,7 @@ import "./interfaces/IBalancerVault.sol";
 // https://etherscan.io/address/0x8353157092ed8be69a9df8f95af097bbf33cb2af#writeContract
 // https://app.balancer.fi/#/ethereum/pool/0x8353157092ed8be69a9df8f95af097bbf33cb2af0000000000000000000005d9
 
-contract CurveMethods is IERC721Receiver {
+abstract contract BalancerMethods is IERC721Receiver {
     IBalancerVault public immutable balancerVault;
 
     address public constant GHO = 0x40D16FC0246aD3160Ccc09B8D0D3A2cD28aE6C2f;
@@ -21,11 +21,11 @@ contract CurveMethods is IERC721Receiver {
         balancerVault = _balancerVault;
     }
 
-    function addLiquidity(
+    function addLiquidityBalancer(
         uint amount0,
         uint amount1,
         address receiver
-    ) external returns (uint256) {
+    ) public returns (uint256) {
         uint256 amount0ToMint = amount0;
         uint256 amount1ToMint = amount1;
 
@@ -64,30 +64,9 @@ contract CurveMethods is IERC721Receiver {
                 fromInternalBalance: params.fromInternalBalance
             })
         );
-
-        // // Remove allowance and refund in both assets.
-        // if (amount0 < amount0ToMint) {
-        //     TransferHelper.safeApprove(
-        //         GHO,
-        //         address(nonfungiblePositionManager),
-        //         0
-        //     );
-        //     uint256 refund0 = amount0ToMint - amount0;
-        //     TransferHelper.safeTransfer(GHO, msg.sender, refund0);
-        // }
-
-        // if (amount1 < amount1ToMint) {
-        //     TransferHelper.safeApprove(
-        //         USDC,
-        //         address(nonfungiblePositionManager),
-        //         0
-        //     );
-        //     uint256 refund1 = amount1ToMint - amount1;
-        //     TransferHelper.safeTransfer(USDC, msg.sender, refund1);
-        // }
     }
 
-    function removeLiquidity(address receiver) external {
+    function removeLiquidityBalancer(address receiver) public {
         // Note that the pool defined by DAI/USDC and fee tier 0.3% must already be created and initialized in order to mint
 
         IBalancerVault.ExitPoolParams memory params = IBalancerVault

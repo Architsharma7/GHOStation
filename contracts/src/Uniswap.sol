@@ -11,7 +11,7 @@ import "@uniswap/v3-periphery/contracts/base/LiquidityManagement.sol";
 
 // https://docs.uniswap.org/contracts/v3/guides/providing-liquidity/increase-liquidity
 
-contract UniswapMethods is IERC721Receiver {
+abstract contract UniswapMethods is IERC721Receiver {
     ISwapRouter public immutable swapRouter;
     INonfungiblePositionManager public immutable nonfungiblePositionManager;
 
@@ -19,6 +19,7 @@ contract UniswapMethods is IERC721Receiver {
     uint160 sqrtPriceLimitX96 = 0;
     address public constant GHO = 0x40D16FC0246aD3160Ccc09B8D0D3A2cD28aE6C2f;
     address public constant USDC = 0xa0b86991c6218b36c1d19d4a2e9eb0ce3606eb48;
+    uint public tokenId;
 
     constructor(
         ISwapRouter _swapRouter,
@@ -30,12 +31,11 @@ contract UniswapMethods is IERC721Receiver {
         nonfungiblePositionManager = _nonfungiblePositionManager;
     }
 
-    function mintNewPosition(
+    function mintNewPositionUniswap(
         uint amount0,
-        uint amount1,
-
+        uint amount1
     )
-        external
+        public
         returns (
             uint256 tokenId,
             uint128 liquidity,
@@ -78,8 +78,10 @@ contract UniswapMethods is IERC721Receiver {
             });
 
         // Note that the pool defined by DAI/USDC and fee tier 0.3% must already be created and initialized in order to mint
-        (tokenId, liquidity, amount0, amount1) = nonfungiblePositionManager
+        (_tokenId, liquidity, amount0, amount1) = nonfungiblePositionManager
             .mint(params);
+
+        tokenId = _tokenId;
 
         // Remove allowance and refund in both assets.
         if (amount0 < amount0ToMint) {
@@ -108,13 +110,15 @@ contract UniswapMethods is IERC721Receiver {
     /// @param tokenId The id of the erc721 token
     /// @return amount0 The amount of fees collected in token0
     /// @return amount1 The amount of fees collected in token1
-    function collectAllFees(uint256 tokenId) external returns (uint256 amount0, uint256 amount1) {
+    function collectAllFeesUniswap(
+        uint256 tokenId
+    ) public returns (uint256 amount0, uint256 amount1) {
         // Caller must own the ERC721 position, meaning it must be a deposit
 
         // set amount0Max and amount1Max to uint256.max to collect all fees
         // alternatively can set recipient to msg.sender and avoid another transaction in `sendToOwner`
-        INonfungiblePositionManager.CollectParams memory params =
-            INonfungiblePositionManager.CollectParams({
+        INonfungiblePositionManager.CollectParams
+            memory params = INonfungiblePositionManager.CollectParams({
                 tokenId: tokenId,
                 recipient: address(this),
                 amount0Max: type(uint128).max,
@@ -127,7 +131,53 @@ contract UniswapMethods is IERC721Receiver {
         _sendToOwner(tokenId, amount0, amount1);
     }
 
-    function decreaseLiquidity(uint256 tokenId) external returns (uint256 amount0, uint256 amount1) {
+    function increaseLiquidityUniswap(
+        uint256 tokenId,
+        uint256 amountAdd0,
+        uint256 amountAdd1
+    ) public returns (uint128 liquidity, uint256 amount0, uint256 amount1) {
+        TransferHelper.safeTransferFrom(
+            GHO,
+            msg.sender,
+            address(this),
+            amountAdd0
+        );
+        TransferHelper.safeTransferFrom(
+            USDC,
+            msg.sender,
+            address(this),
+            amountAdd1
+        );
+
+        TransferHelper.safeApprove(
+            GHO,
+            address(nonfungiblePositionManager),
+            amountAdd0
+        );
+        TransferHelper.safeApprove(
+            USDC,
+            address(nonfungiblePositionManager),
+            amountAdd1
+        );
+
+        INonfungiblePositionManager.IncreaseLiquidityParams
+            memory params = INonfungiblePositionManager
+                .IncreaseLiquidityParams({
+                    tokenId: tokenId,
+                    amount0Desired: amountAdd0,
+                    amount1Desired: amountAdd1,
+                    amount0Min: 0,
+                    amount1Min: 0,
+                    deadline: block.timestamp
+                });
+
+        (liquidity, amount0, amount1) = nonfungiblePositionManager
+            .increaseLiquidity(params);
+    }
+
+    function decreaseLiquidityUniswap(
+        uint256 tokenId
+    ) public returns (uint256 amount0, uint256 amount1) {
         // caller must be the owner of the NFT
         // require(msg.sender == deposits[tokenId].owner, 'Not the owner');
         // get liquidity data for tokenId
@@ -136,19 +186,21 @@ contract UniswapMethods is IERC721Receiver {
 
         // amount0Min and amount1Min are price slippage checks
         // if the amount received after burning is not greater than these minimums, transaction will fail
-        INonfungiblePositionManager.DecreaseLiquidityParams memory params =
-            INonfungiblePositionManager.DecreaseLiquidityParams({
-                tokenId: tokenId,
-                liquidity: 0,
-                amount0Min: 0,
-                amount1Min: 0,
-                deadline: block.timestamp
-            });
+        INonfungiblePositionManager.DecreaseLiquidityParams
+            memory params = INonfungiblePositionManager
+                .DecreaseLiquidityParams({
+                    tokenId: tokenId,
+                    liquidity: 0,
+                    amount0Min: 0,
+                    amount1Min: 0,
+                    deadline: block.timestamp
+                });
 
-        (amount0, amount1) = nonfungiblePositionManager.decreaseLiquidity(params);
+        (amount0, amount1) = nonfungiblePositionManager.decreaseLiquidity(
+            params
+        );
 
         //send liquidity back to owner
         _sendToOwner(tokenId, amount0, amount1);
     }
-
 }
