@@ -9,7 +9,7 @@ import "./interfaces/ICurvePool.sol";
 // https://docs.uniswap.org/contracts/v3/guides/providing-liquidity/increase-liquidity
 // https://etherscan.io/address/0x86152df0a0e321afb3b0b9c4deb813184f365ada#code
 
-contract CurveMethods is IERC721Receiver {
+abstract contract CurveMethods is IERC721Receiver {
     ICurvePool public immutable curvePool;
 
     address public constant GHO = 0x40D16FC0246aD3160Ccc09B8D0D3A2cD28aE6C2f;
@@ -19,7 +19,7 @@ contract CurveMethods is IERC721Receiver {
         curvePool = _curvePool;
     }
 
-    function addLiquidity(
+    function addLiquidityCurve(
         uint amount0,
         uint amount1,
         address receiver
@@ -68,7 +68,7 @@ contract CurveMethods is IERC721Receiver {
         }
     }
 
-    function removeLiquidity(uint burn_amount, address receiver) external {
+    function removeLiquidityCurve(uint burn_amount, address receiver) external {
         // Note that the pool defined by DAI/USDC and fee tier 0.3% must already be created and initialized in order to mint
         (amount0, amount1) = curvePool.remove_liquidity(
             burn_amount,

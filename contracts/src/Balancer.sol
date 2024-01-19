@@ -9,7 +9,7 @@ import "./interfaces/IBalancerVault.sol";
 // https://etherscan.io/address/0x8353157092ed8be69a9df8f95af097bbf33cb2af#writeContract
 // https://app.balancer.fi/#/ethereum/pool/0x8353157092ed8be69a9df8f95af097bbf33cb2af0000000000000000000005d9
 
-contract CurveMethods is IERC721Receiver {
+abstract contract BalancerMethods is IERC721Receiver {
     IBalancerVault public immutable balancerVault;
 
     address public constant GHO = 0x40D16FC0246aD3160Ccc09B8D0D3A2cD28aE6C2f;
@@ -21,7 +21,7 @@ contract CurveMethods is IERC721Receiver {
         balancerVault = _balancerVault;
     }
 
-    function addLiquidity(
+    function addLiquidityBalancer(
         uint amount0,
         uint amount1,
         address receiver
@@ -87,7 +87,7 @@ contract CurveMethods is IERC721Receiver {
         // }
     }
 
-    function removeLiquidity(address receiver) external {
+    function removeLiquidityBalancer(address receiver) external {
         // Note that the pool defined by DAI/USDC and fee tier 0.3% must already be created and initialized in order to mint
 
         IBalancerVault.ExitPoolParams memory params = IBalancerVault

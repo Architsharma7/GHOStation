@@ -1,5 +1,5 @@
 {
-  "name": "SDK",
+  "name": "GHOStation-SDK",
   "version": "1.0.0",
   "description": "A SDK for GHO",
   "main": "dist/esm/index.js",
