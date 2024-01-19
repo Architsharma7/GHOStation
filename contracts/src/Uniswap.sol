@@ -19,6 +19,7 @@ abstract contract UniswapMethods is IERC721Receiver {
     uint160 sqrtPriceLimitX96 = 0;
     address public constant GHO = 0x40D16FC0246aD3160Ccc09B8D0D3A2cD28aE6C2f;
     address public constant USDC = 0xa0b86991c6218b36c1d19d4a2e9eb0ce3606eb48;
+    uint public tokenId;
 
     constructor(
         ISwapRouter _swapRouter,
@@ -34,7 +35,7 @@ abstract contract UniswapMethods is IERC721Receiver {
         uint amount0,
         uint amount1
     )
-        external
+        public
         returns (
             uint256 tokenId,
             uint128 liquidity,
@@ -77,8 +78,10 @@ abstract contract UniswapMethods is IERC721Receiver {
             });
 
         // Note that the pool defined by DAI/USDC and fee tier 0.3% must already be created and initialized in order to mint
-        (tokenId, liquidity, amount0, amount1) = nonfungiblePositionManager
+        (_tokenId, liquidity, amount0, amount1) = nonfungiblePositionManager
             .mint(params);
+
+        tokenId = _tokenId;
 
         // Remove allowance and refund in both assets.
         if (amount0 < amount0ToMint) {
@@ -107,9 +110,9 @@ abstract contract UniswapMethods is IERC721Receiver {
     /// @param tokenId The id of the erc721 token
     /// @return amount0 The amount of fees collected in token0
     /// @return amount1 The amount of fees collected in token1
-    function collectAllFees(
+    function collectAllFeesUniswap(
         uint256 tokenId
-    ) external returns (uint256 amount0, uint256 amount1) {
+    ) public returns (uint256 amount0, uint256 amount1) {
         // Caller must own the ERC721 position, meaning it must be a deposit
 
         // set amount0Max and amount1Max to uint256.max to collect all fees
@@ -132,7 +135,7 @@ abstract contract UniswapMethods is IERC721Receiver {
         uint256 tokenId,
         uint256 amountAdd0,
         uint256 amountAdd1
-    ) external returns (uint128 liquidity, uint256 amount0, uint256 amount1) {
+    ) public returns (uint128 liquidity, uint256 amount0, uint256 amount1) {
         TransferHelper.safeTransferFrom(
             GHO,
             msg.sender,
@@ -174,7 +177,7 @@ abstract contract UniswapMethods is IERC721Receiver {
 
     function decreaseLiquidityUniswap(
         uint256 tokenId
-    ) external returns (uint256 amount0, uint256 amount1) {
+    ) public returns (uint256 amount0, uint256 amount1) {
         // caller must be the owner of the NFT
         // require(msg.sender == deposits[tokenId].owner, 'Not the owner');
         // get liquidity data for tokenId

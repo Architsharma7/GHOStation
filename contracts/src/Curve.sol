@@ -23,7 +23,7 @@ abstract contract CurveMethods is IERC721Receiver {
         uint amount0,
         uint amount1,
         address receiver
-    ) external returns (uint256) {
+    ) public returns (uint256) {
         uint256 amount0ToMint = amount0;
         uint256 amount1ToMint = amount1;
 
@@ -68,7 +68,7 @@ abstract contract CurveMethods is IERC721Receiver {
         }
     }
 
-    function removeLiquidityCurve(uint burn_amount, address receiver) external {
+    function removeLiquidityCurve(uint burn_amount, address receiver) public {
         // Note that the pool defined by DAI/USDC and fee tier 0.3% must already be created and initialized in order to mint
         (amount0, amount1) = curvePool.remove_liquidity(
             burn_amount,

@@ -25,7 +25,7 @@ abstract contract BalancerMethods is IERC721Receiver {
         uint amount0,
         uint amount1,
         address receiver
-    ) external returns (uint256) {
+    ) public returns (uint256) {
         uint256 amount0ToMint = amount0;
         uint256 amount1ToMint = amount1;
 
@@ -64,30 +64,9 @@ abstract contract BalancerMethods is IERC721Receiver {
                 fromInternalBalance: params.fromInternalBalance
             })
         );
-
-        // // Remove allowance and refund in both assets.
-        // if (amount0 < amount0ToMint) {
-        //     TransferHelper.safeApprove(
-        //         GHO,
-        //         address(nonfungiblePositionManager),
-        //         0
-        //     );
-        //     uint256 refund0 = amount0ToMint - amount0;
-        //     TransferHelper.safeTransfer(GHO, msg.sender, refund0);
-        // }
-
-        // if (amount1 < amount1ToMint) {
-        //     TransferHelper.safeApprove(
-        //         USDC,
-        //         address(nonfungiblePositionManager),
-        //         0
-        //     );
-        //     uint256 refund1 = amount1ToMint - amount1;
-        //     TransferHelper.safeTransfer(USDC, msg.sender, refund1);
-        // }
     }
 
-    function removeLiquidityBalancer(address receiver) external {
+    function removeLiquidityBalancer(address receiver) public {
         // Note that the pool defined by DAI/USDC and fee tier 0.3% must already be created and initialized in order to mint
 
         IBalancerVault.ExitPoolParams memory params = IBalancerVault
