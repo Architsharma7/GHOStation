@@ -18,7 +18,8 @@ import {
 /*/ @dev:every method is performed for sepolia chain /*/
 
 const provider = new ethers.providers.JsonRpcProvider(
-  process.env.NEXT_PUBLIC_RPC_URL
+  // process.env.NEXT_PUBLIC_RPC_URL
+  "https://sepolia.infura.io/v3/ba8a3893f5f34779b1ea295f176a73c6"
 );
 
 const poolDataProviderContract = new UiPoolDataProvider({
