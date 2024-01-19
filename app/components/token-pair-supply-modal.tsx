@@ -16,7 +16,7 @@ import { ArrowLeft, ChevronLeft, ChevronRight, FuelIcon } from "lucide-react";
 import Loader from "./ui/loader";
 import CustomConnectButton from "./custom-connect-btn";
 
-export default function SupplyModal() {
+export default function TokenPairSupplyModal() {
   const { isConnected, address } = useAccount();
   const balance = useBalance({
     address,

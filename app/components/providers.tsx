@@ -9,9 +9,9 @@ const chains = [sepolia];
 
 const config = createConfig(
   getDefaultConfig({
-    alchemyId: process.env.NEXT_PUBLIC_ALCHEMY_API,
+    alchemyId: process.env.NEXT_PUBLIC_INFURA_KEY,
     walletConnectProjectId: process.env
-      .NEXT_PUBLIC_WALLETCONNECT_PROJECT_ID as string,
+      .NEXT_PUBLIC_WALLET_CONNECT_PROJECT_ID as string,
     chains,
     appName: "GHO-Station",
     appDescription:
