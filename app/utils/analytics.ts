@@ -97,8 +97,7 @@ const getGHOUserData = async (currentAccount: `0x${string}`) => {
 };
 
 // user data method
-const getUserSummary = async (currentAccount: `0x${string}`) => {
-  const currentTimestamp = dayjs().unix();
+const getUserSummary = async (currentAccount: `0x${string}`, timestamp: number) => {
   const reserves = await poolDataProviderContract.getReservesHumanized({
     lendingPoolAddressProvider: "0x012bAC54348C0E635dCAc9D5FB99f06F24136C9A",
   });
@@ -120,7 +119,7 @@ const getUserSummary = async (currentAccount: `0x${string}`) => {
 
   const poolReserve = await getMarketReserveData();
   const userSummary = formatUserSummaryAndIncentives({
-    currentTimestamp,
+    currentTimestamp : timestamp,
     marketReferencePriceInUsd:
       reserves.baseCurrencyData.marketReferenceCurrencyPriceInUsd,
     marketReferenceCurrencyDecimals:
@@ -155,9 +154,31 @@ const getUserSummary = async (currentAccount: `0x${string}`) => {
   return formattedUserSummary;
 };
 
+const getUserSummaryHistory = async (currentAccount: `0x${string}`) => {
+  const intervals = 4;
+  const intervalDays = 7;
+
+  const userSummaryHistory = [];
+
+  for (let i = 0; i < intervals; i++) {
+    const currentTimestamp = dayjs().subtract(i * intervalDays, 'days').unix();
+
+    const userSummary = await getUserSummary(currentAccount, currentTimestamp);
+
+    userSummaryHistory.push({
+      timestamp: currentTimestamp,
+      userSummary,
+    });
+  }
+
+  console.log(userSummaryHistory);
+  return userSummaryHistory;
+};
+
 export {
   getMarketReserveData,
   getGHOReserveData,
   getGHOUserData,
   getUserSummary,
+  getUserSummaryHistory
 };
