@@ -2,10 +2,14 @@ import { Pool, InterestRate } from "@aave/contract-helpers";
 import { ethers } from "ethers";
 import { EthereumTransactionTypeExtended } from "@aave/contract-helpers";
 import { BigNumber } from "ethers";
+import { sepolia, usePublicClient, useWalletClient } from "wagmi";
+import { createWalletClient, custom } from "viem";
+import { sendTransaction } from "@wagmi/core";
+import { parseEther } from "viem";
 
 const provider = new ethers.providers.JsonRpcProvider(
   //    process.env.NEXT_PUBLIC_RPC_URL
-  "http://localhost:3000"
+  "https://sepolia.infura.io/v3/ba8a3893f5f34779b1ea295f176a73c6"
 );
 
 // declare var window: any
@@ -50,10 +54,18 @@ const borrowGHO = async (
     console.log(txs);
     const extendedTxData = await txs[0].tx();
     const { from, ...txData } = extendedTxData;
-    const signer = provider?.getSigner(from);
-    const txResponse = await signer?.sendTransaction({
-      ...txData,
-      value: txData.value ? BigNumber.from(txData.value) : undefined,
+    const to = txData.to;
+    const value = txData.value;
+    const client = createWalletClient({
+        chain: sepolia,
+        transport: custom(window.ethereum),
+      });
+    const txResponse = await client.sendTransaction({
+        //@ts-ignore
+      to: to as string,
+      //@ts-ignore
+      account : from as string,
+      value: value ? parseEther(value.toString()) : undefined,
     });
     console.log(txResponse);
     return txResponse;
@@ -81,6 +93,11 @@ const repayGHO = async (
     const { from, ...txData } = extendedTxData;
     await provider.send("eth_requestAccounts", []);
     const signer = provider.getSigner(from);
+    // const signer = useWalletClient();
+    const client = createWalletClient({
+      chain: sepolia,
+      transport: custom(window.ethereum),
+    });
     const txResponse = await signer.sendTransaction({
       ...txData,
       value: txData.value ? BigNumber.from(txData.value) : undefined,
@@ -118,9 +135,10 @@ const erc20ApprovalGHO = async (
     console.log(txs);
     const extendedTxData = await txs[0].tx();
     const { from, ...txData } = extendedTxData;
-    await provider.send("eth_requestAccounts", []);
-    const signer = provider.getSigner(from);
-    const txResponse = await signer.sendTransaction({
+    // await provider.send("eth_requestAccounts", []);
+    // const signer = provider.getSigner(from);
+    const signer = useWalletClient();
+    const txResponse = await signer.data?.sendTransaction({
       ...txData,
       value: txData.value ? BigNumber.from(txData.value) : undefined,
     });
