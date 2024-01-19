@@ -12,6 +12,7 @@ import { useState } from "react";
 import { borrowGHO, repayGHO } from "@/utils/operations";
 import { InterestRate } from "@aave/contract-helpers";
 import DashboardTabs from "@/components/dashboard-tabs";
+import { fetchUserTransactions } from "@/utils/transactions";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -94,6 +95,8 @@ export default function Home() {
         <button onClick={() => repayGHO(address, "0.1", InterestRate.Stable)}>
           repay
         </button>
+        <button onClick={() => fetchUserTransactions(address)}>get history</button>
+      </div>
       </div> */}
     </main>
   );

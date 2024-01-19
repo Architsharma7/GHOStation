@@ -15,3 +15,229 @@ html {
     background-image: radial-gradient(50% 50% at 50% 50%, #dbd2ef 0px, #efeaf9 100%);
     /* color: #ad87ff; */
 }
+
+
+.flare {
+    position: fixed;
+    pointer-events: none;
+    transform: translate(-50%, -50%);
+    z-index: 999999 !important;
+    transition: width 0.2s ease-in-out, height 0.2s ease-in-out;
+    cursor: none !important;
+}
+
+/* We need to remove this custom cursor in mobile devices */
+@media screen and (max-width: 768px) {
+    .flare {
+        width: 0;
+        height: 0;
+        transition: width 0.2s ease-in-out, height 0.2s ease-in-out,
+            opacity 0.2s ease-in-out;
+    }
+}
+
+.flare.pointer {
+    opacity: 0 !important;
+    transition: width 0.2s ease-in-out, height 0.2s ease-in-out, opacity 0.2s ease-in-out;
+}
+
+
+#ghost {
+    transform: translateX(50%);
+    transform-origin: center;
+    position: absolute;
+}
+
+.ghost {
+    background: #fff;
+    width: 117px;
+    height: 150px;
+    /* width: 117px;
+    height: 150px; */
+    border-radius: 100px 100px 0 0;
+    box-shadow: 0 0 50px #fff;
+    position: relative;
+    transform-origin: center;
+    animation: float 3s ease-out infinite;
+}
+
+.ghost__eyes {
+    display: flex;
+    gap: 25px;
+    padding-top: 44px;
+    justify-content: center;
+    position: relative;
+}
+
+.ghost__eyes_eye {
+    width: 10px;
+    height: 16px;
+    background: #fff;
+    border: 4px solid #ccc;
+    border-radius: 100px;
+    clip-path: polygon(100% 50%, 100% 100%, 0 100%, 0 50%);
+    transition: .1s;
+}
+
+.ghost__mouth {
+    width: 44px;
+    height: 8px;
+    background: #ccc;
+    border-radius: 10px;
+    margin: 16px auto 0;
+    position: relative;
+    animation: sleep 3s ease-out infinite;
+    transition: .1s;
+}
+
+.ghost__mouth:before {
+    content: "";
+    position: absolute;
+    left: 5px;
+    top: 0;
+    width: 8px;
+    height: 14px;
+    background: #ccc;
+    border-radius: 10px;
+    animation: drool 3s ease-out infinite;
+}
+
+.ghost__waves {
+    display: flex;
+    position: absolute;
+    bottom: -20px;
+    height: 50px;
+    width: 100%;
+    overflow: hidden;
+}
+
+.ghost__wave {
+    width: 117px;
+    height: 50px;
+    background: #fff;
+    flex-shrink: 0;
+
+    animation: ghost 3s linear infinite;
+    transform: translateX(-117px);
+
+    --size: 10px;
+    --p: 5px;
+    --R: 11.18px;
+
+    -webkit-mask:
+        radial-gradient(var(--R) at 50% calc(100% - (var(--size) + var(--p))), blue 99%, #0000 101%) calc(50% - 2*var(--size)) 0/calc(4*var(--size)) 100%,
+        radial-gradient(var(--R) at 50% calc(100% + var(--p)), #0000 99%, red 101%) 50% calc(100% - var(--size))/calc(4*var(--size)) 100% repeat-x;
+}
+
+@keyframes ghost {
+    0% {
+        transform: translateX(-117px);
+    }
+
+    100% {
+        transform: translateX(0);
+    }
+}
+
+@keyframes sleep {
+    0% {
+        width: 44px;
+    }
+
+    50% {
+        width: 26px;
+    }
+
+    100% {
+        width: 44px;
+    }
+}
+
+@keyframes drool {
+    0% {
+        height: 14px;
+    }
+
+    50% {
+        height: 20px;
+    }
+
+    100% {
+        height: 14px;
+    }
+}
+
+@keyframes float {
+    50% {
+        transform: translate(0, 20px);
+    }
+}
+
+.ghost .ghost__eyes_eye,
+#ghost.active .ghost__eyes_eye {
+    background: #000;
+    border-color: #000;
+    clip-path: none;
+    height: 16px;
+    width: 10px;
+    animation: changeHeight 2s ease-in-out infinite alternate;
+    /* Adjust duration and easing as needed */
+
+}
+
+@keyframes changeHeight {
+    0% {
+        height: 16px;
+    }
+
+    100% {
+        height: 12px;
+    }
+}
+
+/* 
+.ghost:hover .ghost__eyes_eye,
+#ghost.active .ghost__eyes_eye {
+    background: #000;
+    border-color: #000;
+    clip-path: none;
+    height: 16px;
+} */
+
+
+.ghost .ghost__mouth:before,
+#ghost.active .ghost__mouth:before {
+    display: none;
+}
+
+/* 
+.ghost:hover .ghost__mouth:before,
+#ghost.active .ghost__mouth:before {
+    display: none;
+} */
+
+.ghost .ghost__mouth,
+#ghost.active .ghost__mouth {
+    animation: none;
+    background: #000;
+    width: 32px;
+    height: 29px;
+    clip-path: polygon(100% 50%, 100% 100%, 0 100%, 0 50%);
+    border-radius: 100px;
+    margin-top: 1px;
+}
+
+/* .ghost:hover .ghost__mouth,
+#ghost.active .ghost__mouth {
+    animation: none;
+    background: #000;
+    width: 32px;
+    height: 29px;
+    clip-path: polygon(100% 50%, 100% 100%, 0 100%, 0 50%);
+    border-radius: 100px;
+    margin-top: 1px;
+} */
+
+#ghost.active .ghost {
+    animation: none;
+}
