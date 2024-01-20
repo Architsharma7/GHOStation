@@ -7,12 +7,14 @@ import {
   getGHOReserveData,
   getGHOUserData,
   getUserSummary,
+  getUserSummaryHistory,
 } from "@/utils/analytics";
 import { useState } from "react";
 import { borrowGHO, repayGHO } from "@/utils/operations";
 import { InterestRate } from "@aave/contract-helpers";
 import DashboardTabs from "@/components/dashboard-tabs";
 import { fetchUserTransactions } from "@/utils/transactions";
+import dayjs from "dayjs";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -23,6 +25,7 @@ export default function Home() {
   const [ghoUserData, setGhoUserData] = useState<any>(null);
   const [userSummary, setUserSummary] = useState<any>(null);
   const provider = usePublicClient();
+  const [userSummaryHistory, setUserSummaryHistory] = useState<any>(null);
 
   const getGHOMarketData = async () => {
     try {
@@ -62,7 +65,8 @@ export default function Home() {
   const getUsersummary = async () => {
     try {
       if (address) {
-        const data = await getUserSummary(address);
+        const timestamp = dayjs().unix();
+        const data = await getUserSummary(address, timestamp);
         console.log(data);
         setUserSummary(data);
       }
@@ -70,14 +74,35 @@ export default function Home() {
       console.log(error);
     }
   };
+
+  const getUserHistory = async () => {
+    try {
+      if (address) {
+        const data = await getUserSummaryHistory(address);
+        const transformedData = data.map((entry) => ({
+          timestamp: new Date(entry.timestamp * 1000).toLocaleDateString(),
+          healthFactor: parseFloat(entry.userSummary.healthFactor),
+          totalBorrowsUSD: parseFloat(entry.userSummary.totalBorrowsUSD),
+          totalCollateralUSD: parseFloat(entry.userSummary.totalCollateralUSD),
+          availableBorrowsUSD: parseFloat(entry.userSummary.availableBorrowsUSD),
+        }));
+        console.log(transformedData);
+        await setUserSummaryHistory(transformedData);
+      }
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
   return (
-    <main className="min-h-[80vh]">
-      <DashboardTabs/>
+    <main className="min-h-screen">
+      <DashboardTabs />
       {/* <div className="space-x-4 ">
         <button onClick={() => getGHOMarketData()}>getMarketData</button>
         <button onClick={() => getGHOReserve()}>getGHOReserveData</button>
         <button onClick={() => getUserData()}>getGHOUserData</button>
         <button onClick={() => getUsersummary()}>getUserSummary</button>
+        <button onClick={() => getUserHistory()}>getUserHistory</button>
         {address && <p>{address}</p>}
 
         <button
@@ -95,8 +120,9 @@ export default function Home() {
         <button onClick={() => repayGHO(address, "0.1", InterestRate.Stable)}>
           repay
         </button>
-        <button onClick={() => fetchUserTransactions(address)}>get history</button>
-      </div>
+        <button onClick={() => fetchUserTransactions(address)}>
+          get history
+        </button>
       </div> */}
     </main>
   );
