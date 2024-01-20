@@ -16,7 +16,7 @@ export default function DashboardTabs() {
           Dashboard
         </TabsTrigger>
         <TabsTrigger className="rounded-md" value="tools">
-          Tools
+          Proposals
         </TabsTrigger>
         <TabsTrigger className="rounded-md" value="earn">
           Earn

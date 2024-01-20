@@ -17,24 +17,27 @@ import {
   getUserSummary,
   getUserSummaryHistory,
 } from "@/utils/analytics";
-import { useState } from "react";
-import { borrowGHO, repayGHO, supplyCollateral } from "@/utils/operations";
+import { useEffect, useState } from "react";
+import { borrowGHO, repayGHO } from "@/utils/operations";
 import { InterestRate } from "@aave/contract-helpers";
 import DashboardTabs from "@/components/dashboard-tabs";
 import { fetchUserTransactions } from "@/utils/transactions";
 import dayjs from "dayjs";
 import { ABI } from "@/constants/GHOTokenABI";
 import { parseUnits, parseEther } from "ethers/lib/utils";
+import { Button } from "@/components/ui/button";
+import { CreateProposal } from "@/components/create-proposal";
 
 const inter = Inter({ subsets: ["latin"] });
 
 export default function Home() {
-  const { address, isConnecting, isDisconnected } = useAccount();
   const [GHOMarketData, setGHOMarketData] = useState<any>(null);
   const [ghoReserveData, setGhoReserveData] = useState<any>(null);
   const [ghoUserData, setGhoUserData] = useState<any>(null);
   const [userSummary, setUserSummary] = useState<any>(null);
+  const [graphData, setGraphData] = useState<any>(null);
   const provider = usePublicClient();
+  const { address, isConnecting, isDisconnected } = useAccount();
   const [userSummaryHistory, setUserSummaryHistory] = useState<any>(null);
 
   const getGHOMarketData = async () => {
@@ -43,7 +46,7 @@ export default function Home() {
       const GHOMarketdata = MarketData.find(
         (token) => token.name === "Gho Token"
       );
-      console.log(GHOMarketdata);
+      // console.log(GHOMarketdata);
       setGHOMarketData(GHOMarketdata);
     } catch (error) {
       console.log(error);
@@ -53,7 +56,7 @@ export default function Home() {
   const getGHOReserve = async () => {
     try {
       const data = await getGHOReserveData();
-      console.log(data);
+      // console.log(data);
       setGhoReserveData(data);
     } catch (error) {
       console.log(error);
@@ -64,7 +67,7 @@ export default function Home() {
     try {
       if (address) {
         const data = getGHOUserData(address);
-        console.log(data);
+        // console.log(data);
         setGhoUserData(data);
       }
     } catch (error) {
@@ -77,7 +80,7 @@ export default function Home() {
       if (address) {
         const timestamp = dayjs().unix();
         const data = await getUserSummary(address, timestamp);
-        console.log(data);
+        // console.log(data);
         setUserSummary(data);
       }
     } catch (error) {
