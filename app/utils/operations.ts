@@ -2,10 +2,12 @@ import { Pool, InterestRate } from "@aave/contract-helpers";
 import { ethers } from "ethers";
 import { EthereumTransactionTypeExtended } from "@aave/contract-helpers";
 import { BigNumber } from "ethers";
-import { sepolia, usePublicClient, useWalletClient } from "wagmi";
-import { createWalletClient, custom } from "viem";
+import { prepareSendTransaction } from "@wagmi/core";
+import { createWalletClient, custom, publicActions, http } from "viem";
 import { sendTransaction } from "@wagmi/core";
-import { parseEther } from "viem";
+import { ABI } from "@/constants/GHOTokenABI";
+import { parseUnits, parseEther } from "ethers/lib/utils";
+import { getPublicClient, getWalletClient } from "wagmi/actions";
 
 const provider = new ethers.providers.JsonRpcProvider(
   //    process.env.NEXT_PUBLIC_RPC_URL
@@ -33,13 +35,28 @@ const pool = new Pool(provider, {
 // 2 options for `debtTokenAddress`: variable: 0x67ae46EF043F7A4508BD1d6B94DB6c33F0915844
 // stable: 0xdCA691FB9609aB814E59c62d70783da1c056A9b6 depending on the interestRateMode
 
+const supplyCollateral = async (
+  user: `0x${string}` | undefined,
+  reserve: string,
+  amount: string,
+  onBehalfOf?: string
+) => {
+  const txs: EthereumTransactionTypeExtended[] = await pool.supply({
+    user: user || "",
+    reserve,
+    amount,
+    onBehalfOf,
+  });
+  console.log(txs);
+};
+
 const borrowGHO = async (
   user: `0x${string}` | undefined,
   amount: string,
   interestRateMode: InterestRate,
-  debtTokenAddress: string,
-  onBehalfOf?: string,
-  referralCode?: string
+//   debtTokenAddress: string,
+//   onBehalfOf?: string,
+//   referralCode?: string
 ) => {
   try {
     const txs: EthereumTransactionTypeExtended[] = await pool.borrow({
@@ -47,28 +64,58 @@ const borrowGHO = async (
       reserve: "0xc4bF5CbDaBE595361438F8c6a187bDc330539c60",
       amount: amount,
       interestRateMode: interestRateMode,
-      debtTokenAddress: debtTokenAddress,
-      onBehalfOf: onBehalfOf,
-      referralCode,
+    //   debtTokenAddress: debtTokenAddress,
+    //   onBehalfOf: onBehalfOf,
+    //   referralCode,
     });
     console.log(txs);
     const extendedTxData = await txs[0].tx();
-    const { from, ...txData } = extendedTxData;
-    const to = txData.to;
-    const value = txData.value;
-    const client = createWalletClient({
-        chain: sepolia,
-        transport: custom(window.ethereum),
-      });
-    const txResponse = await client.sendTransaction({
-        //@ts-ignore
-      to: to as string,
+    console.log(extendedTxData);
+    const publicClient = getPublicClient();
+    const walletClient = await getWalletClient();
+    console.log(walletClient);
+    if (!walletClient) {
+      console.log("no wallet client");
+    }
+    const { ...txData } = await extendedTxData;
+    console.log(txData.to, txData.from, txData.value, txData.data, txData.value);
+
+    // const req = await publicClient.prepareTransactionRequest({
+    //   //@ts-ignore
+    //   to: txData.to,
+    //   //@ts-ignore
+    //   account: txData.from,
+    //   value: txData.value ? BigInt(txData.value) : undefined,
+    //   //@ts-ignore
+    //   data: txData.data,
+    //   gas: txData.gasLimit ? BigInt(txData.gasLimit.toString()) : undefined,
+    //   gasPrice: txData.gasPrice
+    //     ? BigInt(txData.gasPrice.toString())
+    //     : undefined,
+    // });
+    const request = await walletClient?.prepareTransactionRequest({
       //@ts-ignore
-      account : from as string,
-      value: value ? parseEther(value.toString()) : undefined,
+      to: txData.to,
+      //@ts-ignore
+      account: txData.from,
+      value: txData.value ? BigInt(txData.value) : undefined,
+      //@ts-ignore
+      data: txData.data,
+    //   gas: txData.gasLimit ? BigInt(txData.gasLimit.toString()) : undefined,
+    //   gasPrice: txData.gasPrice
+    //     ? BigInt(txData.gasPrice.toString())
+    //     : undefined,
     });
-    console.log(txResponse);
-    return txResponse;
+    console.log(request);
+    if (request) {
+      // const signature = await walletClient?.signTransaction(request);
+      // const hash = await walletClient?.sendRawTransaction(signature);
+      // console.log(hash);
+      const hash = await walletClient?.sendTransaction(request);
+      console.log(hash);
+    } else {
+      console.log("no request");
+    }
   } catch (error) {
     console.log(error);
   }
@@ -149,4 +196,4 @@ const erc20ApprovalGHO = async (
   }
 };
 
-export { borrowGHO, repayGHO };
+export { borrowGHO, repayGHO, supplyCollateral };
