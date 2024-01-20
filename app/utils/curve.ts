@@ -8,6 +8,7 @@ import { getContract, parseEther } from "viem";
 
 // https://resources.curve.fi/reward-gauges/understanding-gauges/#the-dao
 // https://docs.curve.fi/stableswap-exchange/stableswap-ng/pools/plainpool/?h=#remove_liquidity
+
 async function addLiquidityCurvePool() {
   const { address: account } = getAccount();
   const publicClient = getPublicClient();

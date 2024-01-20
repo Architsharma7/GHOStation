@@ -9,16 +9,29 @@ import "./interfaces/IBalancerVault.sol";
 // https://etherscan.io/address/0x8353157092ed8be69a9df8f95af097bbf33cb2af#writeContract
 // https://app.balancer.fi/#/ethereum/pool/0x8353157092ed8be69a9df8f95af097bbf33cb2af0000000000000000000005d9
 
-abstract contract BalancerMethods is IERC721Receiver {
+contract BalancerMethods is IERC721Receiver {
     IBalancerVault public immutable balancerVault;
 
-    address public constant GHO = 0x40D16FC0246aD3160Ccc09B8D0D3A2cD28aE6C2f;
-    address public constant USDC = 0xa0b86991c6218b36c1d19d4a2e9eb0ce3606eb48;
-    bytes32 public constant CURVE_POOL_ID =
-        0x8353157092ed8be69a9df8f95af097bbf33cb2af0000000000000000000005d9;
+    address public immutable GHO;
+    address public immutable USDC;
+    bytes32 public immutable CURVE_POOL_ID;
 
-    constructor(IBalancerVault _balancerVault) {
+    // Mainnet GHO USDC
+    // address public immutable GHO = 0x40D16FC0246aD3160Ccc09B8D0D3A2cD28aE6C2f;
+    // address public immutable USDC = 0xa0b86991c6218b36c1d19d4a2e9eb0ce3606eb48;
+    // bytes32 public immutable CURVE_POOL_ID =
+    //     0x8353157092ed8be69a9df8f95af097bbf33cb2af0000000000000000000005d9;
+
+    constructor(
+        IBalancerVault _balancerVault,
+        address token0,
+        address token1,
+        bytes32 poolId
+    ) {
         balancerVault = _balancerVault;
+        GHO = token0;
+        USDC = token1;
+        CURVE_POOL_ID = poolId;
     }
 
     function addLiquidityBalancer(
@@ -28,6 +41,8 @@ abstract contract BalancerMethods is IERC721Receiver {
     ) public returns (uint256) {
         uint256 amount0ToMint = amount0;
         uint256 amount1ToMint = amount1;
+        // NOTE might need to queryJoin first and then decide
+        // Also maybe no token1 is needed
 
         // Approve the position manager
         TransferHelper.safeApprove(

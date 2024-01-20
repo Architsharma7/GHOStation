@@ -1,5 +1,5 @@
 // SPDX-License-Identifier: UNLICENSED
-pragma solidity ^0.8.19;
+pragma solidity ^0.8.20;
 
 import "@uniswap/v3-core/contracts/interfaces/IUniswapV3Pool.sol";
 import "@uniswap/v3-core/contracts/libraries/TickMath.sol";
@@ -11,24 +11,30 @@ import "@uniswap/v3-periphery/contracts/base/LiquidityManagement.sol";
 
 // https://docs.uniswap.org/contracts/v3/guides/providing-liquidity/increase-liquidity
 
-abstract contract UniswapMethods is IERC721Receiver {
+contract UniswapMethods is IERC721Receiver {
     ISwapRouter public immutable swapRouter;
     INonfungiblePositionManager public immutable nonfungiblePositionManager;
 
     uint24 public constant poolFee = 3000;
     uint160 sqrtPriceLimitX96 = 0;
-    address public constant GHO = 0x40D16FC0246aD3160Ccc09B8D0D3A2cD28aE6C2f;
-    address public constant USDC = 0xa0b86991c6218b36c1d19d4a2e9eb0ce3606eb48;
+    address public immutable GHO;
+    address public immutable USDC;
+    // address public constant GHO = 0x40D16FC0246aD3160Ccc09B8D0D3A2cD28aE6C2f;
+    // address public constant USDC = 0xa0b86991c6218b36c1d19d4a2e9eb0ce3606eb48;
     uint public tokenId;
 
     constructor(
         ISwapRouter _swapRouter,
         INonfungiblePositionManager _nonfungiblePositionManager,
         address _factory,
-        address _WETH9
+        address _WETH9,
+        address token0,
+        address token1
     ) PeripheryImmutableState(_factory, _WETH9) {
         swapRouter = _swapRouter;
         nonfungiblePositionManager = _nonfungiblePositionManager;
+        GHO = token0;
+        USDC = token1;
     }
 
     function mintNewPositionUniswap(

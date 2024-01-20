@@ -33,84 +33,9 @@ contract ERC4626Vault is
     IERC20 public ghoToken;
     uint public taskId;
 
-    constructor(
-        address token0,
-        address token1,
-        bytes32 poolId,
-        address payable _automate,
-        address _fundsOwner,
-        address _balancerVault,
-        ISwapRouter _swapRouter,
-        INonfungiblePositionManager _nonfungiblePositionManager,
-        address _factory,
-        address _WETH9,
-        ICurvePool _curvePool
-    )
-        BalancerMethods(IBalancerVault(_balancerVault), token0, token1, poolId)
-        CurveMethods(_curvePool, token0, token1)
-        UniswapMethods(
-            _swapRouter,
-            _nonfungiblePositionManager,
-            _factory,
-            _WETH9,
-            token0,
-            token1
-        )
-        AutomateTaskCreator(_automate, _fundsOwner)
-        ERC4626(address(ghoToken))
-    {
+    constructor(address token0) ERC4626(address(ghoToken)) {
         controller = msg.sender;
         ghoToken = IERC20(token0);
-    }
-
-    /*///////////////////////////////////////////////////////////////
-                           Gelato
-    //////////////////////////////////////////////////////////////*/
-    function executeGelatoTask() public {
-        // Perform all the checks you want to make sure the task is valid
-        // execute the redistribution function
-    }
-
-    function depositGelatoFees() external payable {
-        _depositFunds(msg.value, ETH);
-    }
-
-    // address(0) for ETH
-    function withdrawGealtoFees(uint256 _amount, address _token) external {
-        withdrawFunds(_amount, _token);
-    }
-
-    function createTask(uint frequency) external returns (bytes32 taskId) {
-        require(
-            msg.sender == controller,
-            "ERC4626Vault: Only controller can withdraw locked assets"
-        );
-        ModuleData memory moduleData = ModuleData({
-            modules: new Module[](2),
-            args: new bytes[](2)
-        });
-
-        moduleData.modules[0] = Module.TIME;
-        moduleData.modules[1] = Module.PROXY;
-        // moduleData.modules[2] = Module.SINGLE_EXEC;
-
-        // we can pass any arg we want in the encodeCall
-        moduleData.args[0] = _timeModuleArg(
-            block.timestamp + frequency,
-            frequency
-        );
-        moduleData.args[1] = _proxyModuleArg();
-        // moduleData.args[2] = _singleExecModuleArg();
-
-        _taskId = _createTask(
-            address(this),
-            abi.encodeCall(this.executeGelatoTask, ()),
-            moduleData,
-            address(0)
-        );
-
-        taskId = _taskId;
-        /// Here we just pass the function selector we are looking to execute
     }
 
     function redistribute() external {

@@ -9,14 +9,19 @@ import "./interfaces/ICurvePool.sol";
 // https://docs.uniswap.org/contracts/v3/guides/providing-liquidity/increase-liquidity
 // https://etherscan.io/address/0x86152df0a0e321afb3b0b9c4deb813184f365ada#code
 
-abstract contract CurveMethods is IERC721Receiver {
+contract CurveMethods is IERC721Receiver {
     ICurvePool public immutable curvePool;
 
-    address public constant GHO = 0x40D16FC0246aD3160Ccc09B8D0D3A2cD28aE6C2f;
-    address public constant USDC = 0xa0b86991c6218b36c1d19d4a2e9eb0ce3606eb48;
+    address public immutable GHO;
+    address public immutable USDC;
 
-    constructor(ICurvePool _curvePool) {
+    // address public constant GHO = 0x40D16FC0246aD3160Ccc09B8D0D3A2cD28aE6C2f;
+    // address public constant USDC = 0xa0b86991c6218b36c1d19d4a2e9eb0ce3606eb48;
+
+    constructor(ICurvePool _curvePool, address token0, address token1) {
         curvePool = _curvePool;
+        GHO = token0;
+        USDC = token1;
     }
 
     function addLiquidityCurve(
