@@ -10,7 +10,7 @@ export default function App({ Component, pageProps }: AppProps) {
   const { pathname } = useRouter();
   return (
     <Providers>
-      <div className={cn(pathname === "/" && "max-w-7xl p-6 mx-auto", " px-0")}>
+      <div className={cn(pathname === "/" && "max-w-7xl px-6 mx-auto", " px-0")}>
         <div className={cn(pathname !== "/" && "max-w-7xl mx-auto", " px-0")}>
           <Navbar />
         </div>
