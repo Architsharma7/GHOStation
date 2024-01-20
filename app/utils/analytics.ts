@@ -155,7 +155,7 @@ const getUserSummary = async (currentAccount: `0x${string}`, timestamp: number) 
 };
 
 const getUserSummaryHistory = async (currentAccount: `0x${string}`) => {
-  const intervals = 4;
+  const intervals = 8;
   const intervalDays = 7;
 
   const userSummaryHistory = [];
