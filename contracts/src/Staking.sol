@@ -15,7 +15,7 @@ contract VerifierStaking is Ownable {
 
     IERC20 public ghoToken;
 
-    constructor(address token, address _manager) {
+    constructor(address token, address _manager) Ownable(msg.sender) {
         ghoToken = IERC20(token);
         manager = _manager; // vault contract , that can block the stake
     }

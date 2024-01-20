@@ -129,7 +129,7 @@ contract InsuranceVault is ERC4626 {
         _depositsData[caller] = DepositDetails(true, block.timestamp);
     }
 
-    /// @de adding constraint that the user should have deposits for more then FIXED_PERIOD
+    ///  adding constraint that the user should have deposits for more then FIXED_PERIOD
     function _withdraw(
         address caller,
         address receiver,
@@ -183,7 +183,7 @@ contract InsuranceVault is ERC4626 {
             insuredAmount > 0,
             "InsuranceVault: Insured amount should be greater then 0"
         );
-        uint premium = insuredAmount.mul(PREMIUM_RATE).div(10000);
+        uint premium = insuredAmount.mulDiv(PREMIUM_RATE,10000);
 
         // Transfer the premium from the company to the vault ,NOTE Should be approved to the vault
         TransferHelper.safeTransferFrom(
@@ -320,7 +320,8 @@ contract InsuranceVault is ERC4626 {
                 _claimProposals[claimId].claimAmount
             );
 
-            uint verifierFee = _claimProposals[claimId].claimAmount.mul(50).div(
+
+            uint verifierFee = _claimProposals[claimId].claimAmount.mulDiv(50,
                 10000
             );
 
@@ -345,7 +346,7 @@ contract InsuranceVault is ERC4626 {
             _claimProposals[claimId]._result = ClaimResult.INVALID;
             _claimProposals[claimId].verifierAddress = msg.sender;
 
-            uint verifierFee = _claimProposals[claimId].claimAmount.mul(50).div(
+            uint verifierFee = _claimProposals[claimId].claimAmount.mulDiv(50,
                 10000
             );
 
