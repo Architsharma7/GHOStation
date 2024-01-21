@@ -1,3 +1,5 @@
+export const GHO_ADDRESS = "0xc4bF5CbDaBE595361438F8c6a187bDc330539c60";
+
 export const ABI = [
   {
     inputs: [{ internalType: "address", name: "admin", type: "address" }],
@@ -461,4 +463,4 @@ export const ABI = [
     stateMutability: "nonpayable",
     type: "function",
   },
-];
+] as const;
