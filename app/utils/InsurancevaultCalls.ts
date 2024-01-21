@@ -10,6 +10,7 @@ import {
 } from "wagmi/actions";
 import { getContract, parseEther } from "viem";
 import { approveGHO } from "./GHOToken";
+import { getFileContent } from "./ipfsstorage";
 
 export const depositFunds = async (amount: number) => {
   const { address: account } = getAccount();
@@ -375,6 +376,8 @@ export const getClaimData = async (claimId: number) => {
     args: [BigInt(claimId)],
   });
 
+  // const fileData = await getFileContent(data[3]);
+  // console.log(fileData);
   console.log(data);
   return data;
 };
@@ -422,7 +425,7 @@ export const getAllClaimProposals = async (): Promise<any[] | undefined> => {
     // filtered by Status , only show PENDING claims
     const allClaimData = await getAllClaims();
 
-    const pendingClaims = allClaimData?.filter((claim) => claim._status === 0);
+    const pendingClaims = allClaimData?.filter((claim) => claim[5] === 0);
     console.log(pendingClaims);
     return pendingClaims;
   } catch (error) {

@@ -21,13 +21,12 @@ export const getFile = async (hash: string) => {
 };
 
 export const getFileContent = async (CID: string) => {
-  fetch(`https://gateway.lighthouse.storage/ipfs/${CID}`)
-    .then((response) => response.json())
-    .then((data) => {
-      console.log(data);
-      return data;
-    })
-    .catch((err) => {
-      console.error("An error ocurred", err);
-    });
+  const data = await fetch(`https://gateway.ipfs.io/ipfs/${CID}`);
+  const response = await data.json();
+  console.log(response);
+
+    // .then((data) => {
+    //   console.log(data);
+    //   return data;
+    // })
 };
