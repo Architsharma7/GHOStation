@@ -1,4 +1,4 @@
-import React from "react";
+import React, {useState} from "react";
 import {
   Card,
   CardDescription,
@@ -12,12 +12,14 @@ import CustomConnectButton from "../../components/custom-connect-btn";
 import Loader from "../../components/ui/loader";
 import { useAccount, useBalance } from "wagmi";
 import { Button } from "../../components/ui/button";
+import { depositPremium } from "@/utils/InsurancevaultCalls";
 
 export default function DepositPremium() {
-  const [inputValue, setInputValue] = React.useState("");
+  const [inputValue, setInputValue] = useState<Number>();
   const { address, isConnected } = useAccount();
   const balance = useBalance({
     address,
+    token: "0xc4bF5CbDaBE595361438F8c6a187bDc330539c60",
   });
   return (
     <Card className="border-0 border-neutral-300 shadow-[0_3px_10px_rgb(0,0,0,0.2)] bg-white min-h-96 p-6 px-8 rounded-xl space-y-3 ">
@@ -33,8 +35,7 @@ export default function DepositPremium() {
           <Input
             type="number"
             placeholder="e.g: 18"
-            value={inputValue}
-            onChange={(e) => setInputValue(e.target.value)}
+            onChange={(e) => setInputValue(Number(e.target.value))}
           />
           <div className="text-sm self-end">
             Wallet Balance: {balance.data?.formatted} {balance.data?.symbol}
@@ -62,7 +63,7 @@ export default function DepositPremium() {
       </div>
       <div className="w-full">
         {isConnected ? (
-          <Button variant={"custom"} className=" w-full ">
+          <Button onClick={() => depositPremium(inputValue as number)} variant={"custom"} className=" w-full ">
             Initiate Transaction <Loader />
           </Button>
         ) : (

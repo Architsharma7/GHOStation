@@ -55,7 +55,7 @@ export default function InsuranceVault() {
           <div className=" space-y-1 w-8/12">
             <div>Deposit</div>
             <Input
-              onChange={(e) => setDepositAmount(e.target.value)}
+              onChange={(e) => setDepositAmount(Number(e.target.value))}
               placeholder="e.g: 18"
             />
           </div>
@@ -74,7 +74,7 @@ export default function InsuranceVault() {
         <div className=" flex items-end justify-between ">
           <div className=" space-y-1 w-8/12">
             <div>Withdraw</div>
-            <Input onChange={(e) => setWithdrawAmount(e.target.value)} placeholder="e.g: 10" />
+            <Input onChange={(e) => setWithdrawAmount(Number(e.target.value))} placeholder="e.g: 10" />
           </div>
           <Button onClick={() => withdrawFunds(withdrawAmount)} className=" w-28" variant={"custom"}>
             Withdraw

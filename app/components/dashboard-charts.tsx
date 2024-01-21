@@ -133,7 +133,7 @@ export default function DashboardCharts() {
     <Card className="  bg-white flex items-center flex-wrap gap-10 w-fit rounded-xl shadow-[0_3px_10px_rgb(0,0,0,0.2)] border-0 p-5  ">
       {graphData &&
         graphData.map(
-          (data, index) =>
+          (data:any, index:any) =>
             data && (
               <LineChart
                 key={index}
