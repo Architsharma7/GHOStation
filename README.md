@@ -26,7 +26,7 @@ The platform enables seamless connectivity to leading browser-based crypto walle
 
 ## Important Links
 
-## Pitch :  
+**Presentation**
 [https://pitch.com/public/5b596455-fbda-4e3e-a63e-380b6964aa4e](https://www.canva.com/design/DAF6iGEhJHA/Nf__3pcmaIv425zab2uggA/edit?utm_content=DAF6iGEhJHA&utm_campaign=designshare&utm_medium=link2&utm_source=sharebutton)
 
 **Deposit**
