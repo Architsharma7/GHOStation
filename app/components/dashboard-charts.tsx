@@ -113,28 +113,28 @@ export default function DashboardCharts() {
 
   // console.log("userSummaryHistory", formattedData);
 
-  useEffect(() => {
-    const getData = async () => {
-      // const data = await getUserHistory();
-      // if (data !== null) {
-      // setGraphData(data);
-      // }
-    };
+  // useEffect(() => {
+  //   const getData = async () => {
+  //     const data = await getUserHistory();
+  //     // if (data !== null) {
+  //     // setGraphData(data);
+  //     // }
+  //   };
 
-    // Create individual datasets for each key
-    const datasets =
-      userSummaryHistory &&
-      Object.keys(userSummaryHistory && userSummaryHistory[0]).map((key) => {
-        return userSummaryHistory.map((item: any) => ({
-          timestamp: item.timestamp,
-          [key]: item[key],
-        }));
-      });
+  //   // Create individual datasets for each key
+  //   const datasets =
+  //     userSummaryHistory &&
+  //     Object.keys(userSummaryHistory && userSummaryHistory[0]).map((key) => {
+  //       return userSummaryHistory.map((item: any) => ({
+  //         timestamp: item.timestamp,
+  //         [key]: item[key],
+  //       }));
+  //     });
 
-    setGraphData(datasets);
+  //   setGraphData(datasets);
 
-    getData();
-  }, [userSummaryHistory]);
+  //   getData();
+  // }, [userSummaryHistory]);
 
   return (
     <div className=" grid grid-cols-12 gap-10">

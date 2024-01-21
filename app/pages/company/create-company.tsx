@@ -1,5 +1,12 @@
 import { Button } from "@/components/ui/button";
 import {
+  Card,
+  CardDescription,
+  CardFooter,
+  CardHeader,
+  CardTitle,
+} from "@/components/ui/card";
+import {
   Dialog,
   DialogContent,
   DialogDescription,
@@ -23,17 +30,6 @@ export function CreateCompany() {
   const [description, setDescription] = useState("");
   const [contact, setContact] = useState<string>("");
   const [webpage, setWebpage] = useState<string>("");
-
-  // struct InsuranceDetails {
-  //   address companyAddress;
-  //   string companyCID;
-  //   uint256 insuredAmount;
-  //   uint256 premium;
-  //   uint256 lastPremiumDepositTime;
-  //   uint256 registerationTime;
-  //   uint256 lastClaimTime;
-  //   uint256 lastClaimAmount;
-  //   }
 
   useEffect(() => {
     if (amount) {
@@ -66,65 +62,61 @@ export function CreateCompany() {
   };
 
   return (
-    <Dialog>
-      <DialogTrigger asChild>
-        <Button variant="custom">Register</Button>
-      </DialogTrigger>
-      <DialogContent className="sm:max-w-[450px] border-0 shadow-md bg-[#eae0ff]">
-        <DialogHeader>
-          <DialogTitle>Register</DialogTitle>
-          <DialogDescription>
-            Fill your company details to get started with Ghostation.
-          </DialogDescription>
-        </DialogHeader>
-        <div className="grid gap-4 py-4">
-          <div className="grid grid-cols-4 items-center gap-4">
-            <Label className="col-span-full">
-              Protocol Name
-              <Input
-                value={protocolName}
-                onChange={(e) => setProtocolName(e.target.value)}
-                type="text"
-                placeholder="e.g: GHOSTATION"
-                className="mt-2 w-full"
-              />
-            </Label>
-          </div>
-          <div className="grid grid-cols-4 items-center gap-4">
-            <Label className="col-span-full">
-              Protocol Wallet Address
-              <Input
-                value={address}
-                type="text"
-                onChange={(e) => setAddress(e.target.value)}
-                placeholder="e.g: 0xfB01b5397E39D10108c1343cA8C27e9B4036beEF"
-                className="mt-2 w-full"
-              />
-            </Label>
-          </div>
-          <div className="grid grid-cols-4 items-center gap-4">
-            <Label className="col-span-full">
-              Insurance Amount
-              <Input
-                type="number"
-                value={amount}
-                onChange={(e) => setAmount(Number(e.target.value))}
-                className="mt-2 w-full"
-              />
-            </Label>
-            {premium && <p className="col-span-full">Premium: {premium}</p>}
-          </div>
+    <Card className=" border-0 p-6 shadow-md rounded-xl ">
+      <CardHeader className=" p-0">
+        <CardTitle>Register</CardTitle>
+        <CardDescription>
+          Fill your company details to get insured with Ghostation.
+        </CardDescription>
+      </CardHeader>
+      <div className="grid gap-4 py-4">
+        <div className="grid grid-cols-4 items-center gap-4">
+          <Label className="col-span-full">
+            Protocol Name
+            <Input
+              value={protocolName}
+              onChange={(e) => setProtocolName(e.target.value)}
+              type="text"
+              placeholder="e.g: GHOSTATION"
+              className="mt-2 w-full"
+            />
+          </Label>
         </div>
-        <DialogFooter>
-          <Button
-            onClick={() => registerCom()}
-            variant="custom"
-            className="w-full"
-          >
-            Register
-          </Button>
-        </DialogFooter>
-      </DialogContent>
-    </Dialog>
+        <div className="grid grid-cols-4 items-center gap-4">
+          <Label className="col-span-full">
+            Protocol Wallet Address
+            <Input
+              value={address}
+              type="text"
+              onChange={(e) => setAddress(e.target.value)}
+              placeholder="e.g: 0xfB01b5397E39D10108c1343cA8C27e9B4036beEF"
+              className="mt-2 w-full"
+            />
+          </Label>
+        </div>
+        <div className="grid grid-cols-4 items-center gap-4">
+          <Label className="col-span-full">
+            Insurance Amount
+            <Input
+              type="number"
+              value={amount}
+              onChange={(e) => setAmount(Number(e.target.value))}
+              className="mt-2 w-full"
+            />
+            <div className=" text-xs mt-1">max 1000 GHO</div>
+          </Label>
+          {!!premium && <p className="col-span-full">Premium: {premium}</p>}
+        </div>
+      </div>
+      <CardFooter className=" p-0">
+        <Button
+          onClick={() => registerCom()}
+          variant="custom"
+          className="w-full"
+        >
+          Register
+        </Button>
+      </CardFooter>
+    </Card>
   );
 }

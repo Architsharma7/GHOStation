@@ -13,6 +13,7 @@ import { ArrowRight } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { CreateProposal } from "@/components/create-proposal";
 import { Separator } from "@/components/ui/separator";
+import ShowClaimDetails from "./show-claim-details";
 
 // struct InsuranceDetails {
 //   address companyAddress;
@@ -51,7 +52,16 @@ export default function AllClaimsTable() {
         </TableHeader>
         <TableBody className="">
           <TableRow className=" hover:bg-white/10 cursor-pointer">
-            <TableCell className=" flex items-center gap-1">data</TableCell>
+            <TableCell>
+              <ShowClaimDetails
+                companyAddress={"0xfB01b5397E39D10108c1343cA8C27e9B4036beEF"}
+                verifierAddress={"0x8jbbe87h5397E39D10108c1343cA8C27e9B4036beEF"}
+                claimAmount={1000}
+                claimProposalTime={"2022-03-11T12:00:00"}
+                ClaimStatus={"Pending"}
+                ClaimResult={"Pending"}
+              />
+            </TableCell>
             <TableCell className="">data</TableCell>
             <TableCell>data</TableCell>
             <TableCell>data</TableCell>
