@@ -22,6 +22,13 @@ import {
 } from "@/utils/analytics";
 import { useAccount } from "wagmi";
 import { useEffect, useState } from "react";
+import {
+  availableBorrowsUSD,
+  chartData,
+  healthFactorData,
+  totalBorrowsUSD,
+  totalCollateralUSD,
+} from "./charts-data";
 
 // const data = [
 //   {
@@ -130,32 +137,63 @@ export default function DashboardCharts() {
   // }, [userSummaryHistory]);
 
   return (
-    <Card className="  bg-white flex items-center flex-wrap gap-10 w-fit rounded-xl shadow-[0_3px_10px_rgb(0,0,0,0.2)] border-0 p-5  ">
-      {graphData &&
-        graphData.map(
-          (data: any, index: any) =>
-            data && (
-              <LineChart
-                key={index}
-                width={630}
-                height={300}
-                data={data}
-                margin={{ top: 10, right: 30, left: 0, bottom: 0 }}
-              >
-                <CartesianGrid strokeDasharray="3 3" />
-                <XAxis dataKey="timestamp" />
-                <YAxis />
-                <Tooltip />
-                <Legend />
-                <Line
-                  type="monotone"
-                  dataKey={Object.keys(data[0])[1]}
-                  stroke="#8884d8"
-                  name={Object.keys(data[0])[1]}
-                />
-              </LineChart>
-            )
-        )}
-    </Card>
+    <div className=" grid grid-cols-12 gap-10">
+      <Card className=" col-span-6 bg-white flex items-center flex-wrap gap-10 w-fit rounded-xl shadow-[0_3px_10px_rgb(0,0,0,0.2)] border-0 p-5  ">
+        <div>
+          <LineChart width={520} height={300} data={healthFactorData}>
+            <CartesianGrid strokeDasharray="3 3" />
+            <XAxis dataKey="timestamp" />
+            <YAxis />
+            <Tooltip />
+            <Legend />
+            <Line type="monotone" dataKey="healthFactor" stroke="#8884d8" />
+          </LineChart>
+        </div>
+      </Card>
+      <Card className=" col-span-6 bg-white flex items-center flex-wrap gap-10 w-fit rounded-xl shadow-[0_3px_10px_rgb(0,0,0,0.2)] border-0 p-5  ">
+        <div>
+          <LineChart width={520} height={300} data={totalBorrowsUSD}>
+            <CartesianGrid strokeDasharray="3 3" />
+            <XAxis dataKey="timestamp" />
+            <YAxis />
+            <Tooltip />
+            <Legend />
+            <Line type="monotone" dataKey="totalBorrowsUSD" stroke="#8884d8" />
+          </LineChart>
+        </div>
+      </Card>
+      <Card className="col-span-6 bg-white flex items-center flex-wrap gap-10 w-fit rounded-xl shadow-[0_3px_10px_rgb(0,0,0,0.2)] border-0 p-5  ">
+        <div>
+          <LineChart width={520} height={300} data={totalCollateralUSD}>
+            <CartesianGrid strokeDasharray="3 3" />
+            <XAxis dataKey="timestamp" />
+            <YAxis />
+            <Tooltip />
+            <Legend />
+            <Line
+              type="monotone"
+              dataKey="totalCollateralUSD"
+              stroke="#8884d8"
+            />
+          </LineChart>
+        </div>
+      </Card>
+      <Card className="col-span-6 bg-white flex items-center flex-wrap gap-10 w-fit rounded-xl shadow-[0_3px_10px_rgb(0,0,0,0.2)] border-0 p-5  ">
+        <div>
+          <LineChart width={520} height={300} data={availableBorrowsUSD}>
+            <CartesianGrid strokeDasharray="3 3" />
+            <XAxis dataKey="timestamp" />
+            <YAxis />
+            <Tooltip />
+            <Legend />
+            <Line
+              type="monotone"
+              dataKey="availableBorrowsUSD"
+              stroke="#8884d8"
+            />
+          </LineChart>
+        </div>
+      </Card>
+    </div>
   );
 }
