@@ -14,9 +14,10 @@ export default function Vault() {
   const balance = useBalance({
     address,
   });
+
   return (
-    <div>
-      <Card className=" gradien bg-white rounded-xl  shadow-[0_3px_10px_rgb(0,0,0,0.2)] border-0 p-5  ">
+    <div className=" h-full w-full">
+      <Card className=" w-full gradien bg-white rounded-xl  shadow-[0_3px_10px_rgb(0,0,0,0.2)] border-0 p-5  ">
         <div className=" flex items-center justify-between">
           <div className=" flex items-center gap-3">
             <Coins className=" h-6 w-6" />
@@ -32,29 +33,29 @@ export default function Vault() {
         </div>
         <div className=" flex items-center justify-center flex-col">
           <VaultStats />
-          <div className="text-sm">
-            Token Distribution across different DEX's
-          </div>
         </div>
+
         <Separator className=" my-4" />
-        <div className=" flex items-end justify-between ">
-          <div className=" space-y-1 w-8/12">
-            <div>Deposit</div>
-            <Input placeholder="e.g: 18" />
+        <div className=" flex items-start justify-between gap-6">
+          <div className=" flex items-end gap-3 w-full flex-col justify-between ">
+            <div className=" space-y-1 w-full ">
+              <div>Deposit</div>
+              <Input placeholder="e.g: 18" />
+            </div>
+            <Button className=" w-full" variant={"custom"}>
+              Deposit
+            </Button>
           </div>
-          <Button className=" w-28" variant={"custom"}>
-            Deposit
-          </Button>
-        </div>
-        <Separator className=" mb-4 mt-6" />
-        <div className=" flex items-end justify-between ">
-          <div className=" space-y-1 w-8/12">
-            <div>Withdraw</div>
-            <Input placeholder="e.g: 10" />
+          <Separator orientation="vertical" className="h-24 self-center" />
+          <div className=" flex items-end gap-3 w-full flex-col justify-between ">
+            <div className=" space-y-1 w-full ">
+              <div>Withdraw</div>
+              <Input placeholder="e.g: 10" />
+            </div>
+            <Button className=" w-full" variant={"custom"}>
+              Withdraw
+            </Button>
           </div>
-          <Button className=" w-28" variant={"custom"}>
-            Withdraw
-          </Button>
         </div>
       </Card>
     </div>

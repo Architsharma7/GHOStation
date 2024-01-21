@@ -10,11 +10,13 @@ export default function App({ Component, pageProps }: AppProps) {
   const { pathname } = useRouter();
   return (
     <Providers>
-      <div className={cn(pathname === "/app" && "max-w-7xl px-6 mx-auto", " px-0")}>
-        <div className={cn(pathname !== "/app" && "max-w-7xl mx-auto", " px-0")}>
+      <div
+        className={cn(pathname !== "/" && " px-0", "max-w-7xl px-6 mx-auto")}
+      >
+        <div className={cn(pathname === "/" && " px-0", "max-w-7xl mx-auto")}>
           <Navbar />
         </div>
-        <div className={cn(pathname === "/app" && "p-6", " px-0")}>
+        <div className={cn(pathname !== "/app" && " px-0",  "p-6")}>
           <FlareCursor />
           <Component {...pageProps} />
         </div>
