@@ -594,4 +594,5 @@ const CURVE_ABI = [
     outputs: [{ name: "", type: "uint256" }],
   },
 ] as const;
+
 export { CURVE_ABI };

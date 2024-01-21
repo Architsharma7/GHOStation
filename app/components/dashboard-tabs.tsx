@@ -7,6 +7,7 @@ import MintGHO from "./mint-gho";
 import { Card } from "./ui/card";
 import ghost from "@/assets/ghost.png";
 import Image from "next/image";
+import Proposals from "./proposals";
 
 export default function DashboardTabs() {
   return (
@@ -31,19 +32,7 @@ export default function DashboardTabs() {
           </div>
         </TabsContent>
         <TabsContent value="tools" className="py-8">
-          <div className=" flex items-start gap-10 justify-between">
-            <div className="space-y-8 w-5/12">
-              <Card className="border-0 flex-col  flex items-stretch justify-center border-neutral-300 shadow-[0_3px_10px_rgb(0,0,0,0.2)] bg-white min-h-96 p-6 px-8 rounded-xl space-y-3 ">
-                Mint GHO and Supply GHO token pairs
-              </Card>
-              <MintGHO />
-            </div>
-            <div className=" w-7/12">
-              <SupplyTable />
-            </div>
-
-            {/* <VaultDeposit /> */}
-          </div>
+          <Proposals />
         </TabsContent>
         <TabsContent
           value="earn"
@@ -57,8 +46,16 @@ export default function DashboardTabs() {
           </div>
         </TabsContent>
       </div>
-      <Image src={ghost} alt="ghost" className="absolute top-16 left-14 -z-10 w-80" />
-      <Image src={ghost} alt="ghost" className="absolute -top-16 transform -scale-x-100 -right-20 -z-10 w-80 -scale-1 " />
+      <Image
+        src={ghost}
+        alt="ghost"
+        className="absolute top-16 left-14 -z-10 w-80"
+      />
+      <Image
+        src={ghost}
+        alt="ghost"
+        className="absolute -top-16 transform -scale-x-100 -right-20 -z-30 w-80 -scale-1 "
+      />
     </Tabs>
   );
 }

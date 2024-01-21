@@ -7,7 +7,7 @@
 	path = contracts/lib/openzeppelin-contracts
 	url = https://github.com/OpenZeppelin/openzeppelin-contracts
 [submodule "lib/openzeppelin-contracts"]
-	branch = v5.0.1
+	branch = release-v4.8
 [submodule "contracts/lib/v3-periphery"]
 	path = contracts/lib/v3-periphery
 	url = https://github.com/Uniswap/v3-periphery
