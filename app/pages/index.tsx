@@ -23,15 +23,17 @@ export default function App() {
           // className=" w-8/12 -z-10 -top-40 absolute op-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 rounded-xl"
         />
         <Card className="text-lg font-semibold tracking-wide max-w-2xl z-10 p-7 text-center">
-          GHO-Station brings together all DeFi operations into one simple,
-          unified platform. Take advantage of yield opportunities, and all
-          things GHO - all from one powerful solution.
+          GHO-Station provides insurance for your web3 protocols, you pay timely
+          premium and get a guaranteed returns after the lock-in preriod is
+          over. Incase of a breach or mishap, protcols can file a claim to
+          receive insurance amount. Users get to earn yeild by depositing their
+          funds in the vault.
         </Card>
       </div>
       {/* </div> */}
-      <div className="py-10 px-20">
+      {/* <div className="py-10 px-20">
         <Features />
-      </div>
+      </div> */}
       {/* <div className=" bg-yellow-400 p-10 min-h-[40vh] -mt-20 w-full">
         Lorem ipsum dolor sit amet consectetur adipisicing elit. Iure eius quam
         itaque quod. Eum sint laudantium facilis commodi numquam, incidunt
