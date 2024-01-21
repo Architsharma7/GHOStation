@@ -109,24 +109,24 @@ export default function Home() {
     }
   };
 
-  const to = "0x7762EC233acD6e04B7B8b905311F88b5003e1aFB";
-  const amount = "0.06";
-  const { config: configWrite } = usePrepareContractWrite({
-    address: "0xc4bF5CbDaBE595361438F8c6a187bDc330539c60",
-    abi: ABI,
-    functionName: "transfer",
-    args: [to, parseUnits(amount, 18)],
-  });
-  const { data: dataWrite, write } = useContractWrite(configWrite);
-  const { config } = usePrepareSendTransaction({
-    to: to,
-    value: parseEther("0").toBigInt(),
-  });
-  const { data, sendTransaction } = useSendTransaction(config);
-  const { isLoading, isSuccess } = useWaitForTransaction({
-    hash: data?.hash || dataWrite?.hash,
-  });
-  console.log(data?.hash);
+  // const to = "0x7762EC233acD6e04B7B8b905311F88b5003e1aFB";
+  // const amount = "0.06";
+  // const { config: configWrite } = usePrepareContractWrite({
+  //   address: "0xc4bF5CbDaBE595361438F8c6a187bDc330539c60",
+  //   abi: ABI,
+  //   functionName: "transfer",
+  //   args: [to, parseUnits(amount, 18)],
+  // });
+  // const { data: dataWrite, write } = useContractWrite(configWrite);
+  // const { config } = usePrepareSendTransaction({
+  //   to: to,
+  //   value: parseEther("0").toBigInt(),
+  // });
+  // const { data, sendTransaction } = useSendTransaction(config);
+  // const { isLoading, isSuccess } = useWaitForTransaction({
+  //   hash: data?.hash || dataWrite?.hash,
+  // });
+  // console.log(data?.hash);
 
   return (
     <main className="min-h-screen">

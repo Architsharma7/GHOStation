@@ -4,6 +4,7 @@ import { Card } from "@/components/ui/card";
 import ghost from "@/assets/ghost.gif";
 // import ghost from "@/assets/ghost4.png";
 import Features from "@/components/features";
+import { getFile, getFileContent, uploadProposal } from "@/utils/ipfsstorage";
 
 export default function App() {
   return (
@@ -37,6 +38,8 @@ export default function App() {
         fugiat possimus labore ut eligendi corrupti obcaecati! Sed, dignissimos
         corrupti.
       </div> */}
+      <button onClick={() => uploadProposal({name: "archit"})}>psot</button>
+      <button onClick={() => getFileContent("QmQgv5RQp7r3odHrWitJCwg64gzGVSiRwrh3ZvonUc4kYm")}>get</button>
     </div>
   );
 }

@@ -20,4 +20,14 @@ export const getFile = async (hash: string) => {
   const fileInfo = await lighthouse.getFileInfo(hash);
 };
 
-export const getFileContent = async (CID: string) => {};
+export const getFileContent = async (CID: string) => {
+  fetch(`https://gateway.lighthouse.storage/ipfs/${CID}`)
+    .then((response) => response.json())
+    .then((data) => {
+      console.log(data);
+      return data;
+    })
+    .catch((err) => {
+      console.error("An error ocurred", err);
+    });
+};
