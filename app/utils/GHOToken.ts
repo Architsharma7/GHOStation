@@ -1,14 +1,26 @@
-import { getAccount, getPublicClient, getWalletClient } from "wagmi/actions";
+import {
+  getAccount,
+  getPublicClient,
+  getWalletClient,
+  getNetwork,
+} from "wagmi/actions";
 import { getContract, parseEther } from "viem";
 import { GHO_ADDRESS, ABI as GHO_ABI } from "@/constants/GHOTokenABI";
 
 export const approveGHO = async (spender: `0x${string}`, amount: number) => {
   const { address: account } = getAccount();
   const publicClient = getPublicClient();
-  const walletClient = await getWalletClient();
+  const network = getNetwork();
+  if (!network) {
+    return;
+  }
+  const walletClient = await getWalletClient({ chainId: network?.chain.id });
   if (!account) {
     return;
   }
+
+  console.log(publicClient.chain);
+  console.log(walletClient?.chain);
 
   const GHO_CONTRACT = getContract({
     address: GHO_ADDRESS,

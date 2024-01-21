@@ -1,4 +1,4 @@
-import React from "react";
+import React, {useState} from "react";
 import { Card } from "./ui/card";
 import { Separator } from "./ui/separator";
 import { Coins, Wallet2Icon } from "lucide-react";
@@ -13,6 +13,7 @@ export default function Vault() {
   const { address, isConnected } = useAccount();
   const balance = useBalance({
     address,
+    token: "0xc4bF5CbDaBE595361438F8c6a187bDc330539c60",
   });
 
   return (

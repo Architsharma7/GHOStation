@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { Card } from "./ui/card";
 import { Separator } from "./ui/separator";
 import { Coins, Wallet2Icon } from "lucide-react";
@@ -9,6 +9,12 @@ import { Input } from "./ui/input";
 import { Button } from "./ui/button";
 import VaultStats from "./vault-stats";
 import { depositFunds, withdrawFunds } from "@/utils/InsurancevaultCalls";
+import {
+  INSURANCE_VAULT_ABI,
+  INSURANCE_VAULT_ADDRESS,
+} from "@/constants/InsuranceVault";
+import { getAccount, getPublicClient, getWalletClient } from "wagmi/actions";
+import {formatEther} from "viem";
 
 export default function InsuranceVault() {
   const { address, isConnected } = useAccount();
@@ -18,6 +24,75 @@ export default function InsuranceVault() {
     address,
     token: "0xc4bF5CbDaBE595361438F8c6a187bDc330539c60",
   });
+
+  useEffect(() => {
+    getTVL();
+    getTotalshares();
+    getShareValue(10);
+  }, [])
+  
+
+  const [TVL, setTVL] = useState<string>("");
+  const [totalShares, setTotalShares] = useState<number>(0);
+  const [shareValue, setShareValue] = useState<number>(0);
+
+  const getTVL = async () => {
+    const { address: account } = getAccount();
+    const publicClient = getPublicClient();
+    if(account === undefined){
+      return
+    }
+
+    const data = await publicClient.readContract({
+      account,
+      address: INSURANCE_VAULT_ADDRESS,
+      abi: INSURANCE_VAULT_ABI,
+      functionName: "totalAssets"
+    });
+
+    console.log(formatEther(data));
+    setTVL(formatEther(data));
+  };
+
+  const getTotalshares = async () => {
+    const { address: account } = getAccount();
+    const publicClient = getPublicClient();
+    if(account === undefined){
+      return
+    }
+
+    const data = await publicClient.readContract({
+      account,
+      address: INSURANCE_VAULT_ADDRESS,
+      abi: INSURANCE_VAULT_ABI,
+      functionName: "balanceOf",
+      args: [account]
+    });
+    console.log(data);
+    setTotalShares(Number(data));
+    return data;
+  };
+
+  const getShareValue = async () => {
+    const { address: account } = getAccount();
+    const publicClient = getPublicClient();
+    if(account === undefined){
+      return
+    }
+    const share = await getTotalshares();
+    if(share === undefined){
+      return
+    }
+    const data = await publicClient.readContract({
+      account,
+      address: INSURANCE_VAULT_ADDRESS,
+      abi: INSURANCE_VAULT_ABI,
+      functionName: "previewRedeem",
+      args: [share]
+    });
+    console.log(data);
+    setShareValue(Number(data));
+  };
   return (
     <div className=" w-full h-full">
       {/* <Card className=" w-full -full gradien bg-white rounded-xl  shadow-[0_3px_10px_rgb(0,0,0,0.2)] border-0 p-5  "> */}
@@ -27,12 +102,12 @@ export default function InsuranceVault() {
             <Coins className=" h-6 w-6" />
             <div>
               <div className=" text-sm">Number of Shares</div>
-              <div className=" text-base font-semibold">10</div>
+              <div className=" text-base font-semibold">{totalShares && totalShares}</div>
             </div>
           </div>
           <div>
             <div className=" text-sm">Share Value</div>
-            <div className=" text-base font-semibold">29 GHO</div>
+            <div className=" text-base font-semibold">{shareValue && shareValue} GHO</div>
           </div>
         </div>
         <div className=" flex items-start justify-start gap-3 flex-col mt-4">
@@ -43,7 +118,7 @@ export default function InsuranceVault() {
           </p>
           <div className=" flex font-semibold font-sans items-center justify-between w-full">
             <div>APY 18%</div>
-            <div>TVL : 1000 GHO</div>
+            <div>TVL : {TVL && TVL} GHO</div>
           </div>
         </div>
 
