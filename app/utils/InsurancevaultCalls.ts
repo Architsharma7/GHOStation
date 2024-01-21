@@ -378,6 +378,7 @@ export const getClaimData = async (claimId: number) => {
 
   // const fileData = await getFileContent(data[3]);
   // console.log(fileData);
+  data.push(claimId);
   console.log(data);
   return data;
 };

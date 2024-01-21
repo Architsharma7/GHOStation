@@ -60,14 +60,14 @@ export default function RegisteredCompanyDetails() {
             <div className=" text-lg">Premium Last Deposited</div>
             <div>
               {companyDetails &&
-                new Date(Number(companyDetails[4])).toLocaleDateString()}
+                new Date(Number(companyDetails[4]) * 1000).toLocaleDateString()}
             </div>
           </div>
           <div className=" flex items-start gap-1 flex-col justify-between">
             <div className=" text-lg">Registered On</div>
             <div>
               {companyDetails &&
-                new Date(Number(companyDetails[5])).toLocaleDateString()}
+                new Date(Number(companyDetails[5]) * 1000).toLocaleDateString()}
             </div>
           </div>
         </Card>
@@ -76,7 +76,7 @@ export default function RegisteredCompanyDetails() {
             <div className=" text-lg">Last Claim Filed On</div>
             <div>
               {companyDetails &&
-                new Date(Number(companyDetails[6])).toLocaleDateString()}
+                new Date(Number(companyDetails[6]) * 1000).toLocaleDateString()}
             </div>
           </div>
           <div className=" flex items-start gap-1 flex-col justify-between">

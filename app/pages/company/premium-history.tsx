@@ -66,7 +66,7 @@ export default function PremiumHistory() {
               return (
                 <TableRow className=" hover:bg-white/10 cursor-pointer">
                   <TableCell className=" flex items-center gap-1">
-                    {new Date(Number(data.txTime)).toLocaleDateString()}
+                    {new Date(Number(data.txTime) * 1000).toLocaleDateString()}
                   </TableCell>
                   <TableCell className="">
                     {Number(formatEther(data.transactionValue))}
