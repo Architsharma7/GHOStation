@@ -12,12 +12,23 @@ import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Textarea } from "./ui/textarea";
 import { useState } from "react";
+import { uploadData } from "@/utils/ipfsstorage";
+import { requestClaim } from "@/utils/InsurancevaultCalls";
 
 export function CreateProposal() {
   const [protocolName, setProtocolName] = useState("");
   const [address, setAddress] = useState("");
   const [amount, setAmount] = useState<number>(0);
   const [description, setDescription] = useState("");
+
+  const requestClaimProposal = async () => {
+    const data = {
+      protocolName: protocolName,
+    };
+    const cid = await uploadData(data);
+    const tx = await requestClaim(amount, cid);
+    console.log(tx);
+  };
 
   return (
     <Dialog>
@@ -80,7 +91,11 @@ export function CreateProposal() {
           </div>
         </div>
         <DialogFooter>
-          <Button variant="custom" className="w-full">
+          <Button
+            onClick={() => requestClaimProposal()}
+            variant="custom"
+            className="w-full"
+          >
             File Claim
           </Button>
         </DialogFooter>
