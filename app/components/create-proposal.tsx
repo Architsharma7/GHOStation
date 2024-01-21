@@ -24,7 +24,7 @@ export function CreateProposal() {
       <DialogTrigger asChild>
         <div className=" cursor-pointer">Create Proposal</div>
       </DialogTrigger>
-      <DialogContent className="sm:max-w-[425px] border-0 shadow-md bg-[#eae0ff]">
+      <DialogContent className="sm:max-w-[450px] border-0 shadow-md bg-[#eae0ff]">
         <DialogHeader>
           <DialogTitle>Create Proposal</DialogTitle>
           <DialogDescription>
@@ -51,7 +51,7 @@ export function CreateProposal() {
                 value={address}
                 type="text"
                 onChange={(e) => setAddress(e.target.value)}
-                placeholder="e.g: 0xjjh73bh8.....3859"
+                placeholder="e.g: 0xfB01b5397E39D10108c1343cA8C27e9B4036beEF"
                 className="mt-2 w-full"
               />
             </Label>

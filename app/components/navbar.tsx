@@ -20,6 +20,12 @@ export default function Navbar() {
           </h1>
         </Link>
         <div className=" flex items-center gap-5">
+          <Link
+            href={"/app"}
+            
+          >
+            Dashboard
+          </Link>
           <CreateProposal />
           <ConnectKitButton />
         </div>
