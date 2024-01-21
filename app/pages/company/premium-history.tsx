@@ -19,6 +19,7 @@ import {
 export default function PremiumHistory() {
   const [premiumData, setPremiumData] = useState<any>();
   const { address } = useAccount();
+
   // fetch Company Insurance Data
   useEffect(() => {
     if (!premiumData && address) {
@@ -28,7 +29,7 @@ export default function PremiumHistory() {
 
   const getPremiumHistoryData = async () => {
     if (!address) return;
-    const data = await fetchPremiumTransaction(address, 15000000000000000000);
+    const data = await fetchPremiumTransaction(address, 15);
     console.log(data);
     setPremiumData(data);
   };
