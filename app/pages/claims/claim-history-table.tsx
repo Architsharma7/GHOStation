@@ -1,4 +1,4 @@
-import React, {useEffect, useState} from "react";
+import React, { useEffect, useState } from "react";
 import {
   Table,
   TableBody,
@@ -14,7 +14,8 @@ import { Button } from "@/components/ui/button";
 import { CreateProposal } from "@/components/create-proposal";
 import { Separator } from "@/components/ui/separator";
 import ShowClaimDetails from "./show-claim-details";
-
+import { getAllClaims } from "@/utils/InsurancevaultCalls";
+import { parseEther } from 'viem'
 // struct InsuranceDetails {
 //   address companyAddress;
 //   string companyCID;
@@ -26,8 +27,18 @@ import ShowClaimDetails from "./show-claim-details";
 //   uint256 lastClaimAmount;
 //   }
 
-
 export default function AllClaimsTable() {
+  const [data, setData] = useState<any>(null);
+
+  const getClaims = async () => {
+    const data = await getAllClaims();
+    console.log(data);
+    setData(data);
+  };
+
+  useEffect(() => {
+    getClaims();
+  }, []);
 
   return (
     <Card className=" w-full shadow-[0_3px_10px_rgb(0,0,0,0.2)] min-h-96 p-6 px-8 rounded-xl space-y-3 ">
@@ -35,7 +46,7 @@ export default function AllClaimsTable() {
         <TableHeader className=" ">
           <TableRow className=" ">
             <TableHead className="text-neutral-700 rounded-l-xl bg-violet-300/30 ">
-              Protocol Name
+              Protocol Address
             </TableHead>
             <TableHead className="text-neutral-700 bg-violet-300/30 ">
               Claim Date
@@ -51,24 +62,33 @@ export default function AllClaimsTable() {
           </TableRow>
         </TableHeader>
         <TableBody className="">
-          <TableRow className=" hover:bg-white/10 cursor-pointer">
-            <TableCell>
-              <ShowClaimDetails
-                companyAddress={"0xfB01b5397E39D10108c1343cA8C27e9B4036beEF"}
-                verifierAddress={"0x8jbbe87h5397E39D10108c1343cA8C27e9B4036beEF"}
-                claimAmount={1000}
-                claimProposalTime={"2022-03-11T12:00:00"}
-                ClaimStatus={"Pending"}
-                ClaimResult={"Pending"}
-              />
-            </TableCell>
-            <TableCell className="">data</TableCell>
-            <TableCell>data</TableCell>
-            <TableCell>data</TableCell>
-            <TableCell className=" w-32">
-              <Button variant={"destructive"}>Dispute</Button>
-            </TableCell>
-          </TableRow>
+          {data &&
+            data.map((data: any, id: any) => {
+              return (
+                <TableRow key={id} className=" hover:bg-white/10 cursor-pointer">
+                  <TableCell>
+                    <ShowClaimDetails
+                      companyAddress={
+                        data[0]
+                      }
+                      verifierAddress={
+                        data[1]
+                      }
+                      claimAmount={data[2]}
+                      claimProposalTime={data[4]}
+                      ClaimStatus= {data[5] === 0 ? "Pending" : "Verified"}
+                      ClaimResult={data[6] === 0 ? "NOT_PROCESSED" : "VALID"}
+                    />
+                  </TableCell>
+                  <TableCell className="">{new Date(Number(data[4])*1000).toLocaleDateString()}</TableCell>
+                  <TableCell>{((data[2]).toString()/1e18)}</TableCell>
+                  <TableCell><p>{data[5] === 0 ? "Pending" : "Verified" }</p></TableCell>
+                  <TableCell className=" w-32">
+                    <Button variant={"destructive"}>Dispute</Button>
+                  </TableCell>
+                </TableRow>
+              );
+            })}
         </TableBody>
       </Table>
     </Card>

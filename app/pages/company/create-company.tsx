@@ -29,7 +29,6 @@ export function CreateCompany() {
   const [premium, setPremium] = useState<number>(0);
   const [description, setDescription] = useState("");
   const [contact, setContact] = useState<string>("");
-  const [webpage, setWebpage] = useState<string>("");
 
   useEffect(() => {
     if (amount) {
@@ -50,7 +49,6 @@ export function CreateCompany() {
       const data = {
         protocolName: protocolName,
         contact: contact,
-        webpage: webpage,
         description: description,
       };
       const cid = await uploadData(data);
@@ -90,6 +88,28 @@ export function CreateCompany() {
               type="text"
               onChange={(e) => setAddress(e.target.value)}
               placeholder="e.g: 0xfB01b5397E39D10108c1343cA8C27e9B4036beEF"
+              className="mt-2 w-full"
+            />
+          </Label>
+        </div>
+        <div className="grid grid-cols-4 items-center gap-4">
+          <Label className="col-span-full">
+            Protocol Description
+            <Input
+              value={description}
+              type="text"
+              onChange={(e) => setDescription(e.target.value)}
+              className="mt-2 w-full"
+            />
+          </Label>
+        </div>
+        <div className="grid grid-cols-4 items-center gap-4">
+          <Label className="col-span-full">
+            Protocol Contact Details
+            <Input
+              value={contact}
+              type="text"
+              onChange={(e) => setContact(e.target.value)}
               className="mt-2 w-full"
             />
           </Label>

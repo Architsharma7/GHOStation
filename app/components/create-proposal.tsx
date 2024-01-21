@@ -24,10 +24,14 @@ export function CreateProposal() {
   const requestClaimProposal = async () => {
     const data = {
       protocolName: protocolName,
+      address: address,
+      amount: amount,
+      reason: description
     };
     const cid = await uploadData(data);
     const tx = await requestClaim(amount, cid);
     console.log(tx);
+    return tx;
   };
 
   return (
