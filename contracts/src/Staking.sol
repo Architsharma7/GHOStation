@@ -13,6 +13,8 @@ contract VerifierStaking is Ownable {
     mapping(address => bool) public isVerifier;
     address public manager;
 
+    uint public constant STAKING_AMOUNT = 10; // Need to change it to 100 or 1000 later
+
     IERC20 public ghoToken;
 
     constructor(address token, address _manager) Ownable(msg.sender) {
@@ -32,13 +34,19 @@ contract VerifierStaking is Ownable {
     function stake() public {
         // User need to provider approval for the Token Transfer
         require(
-            ghoToken.allowance(msg.sender, address(this)) >= 1000 * 10 ** 18,
+            ghoToken.allowance(msg.sender, address(this)) >=
+                STAKING_AMOUNT * 10 ** 18,
             "TOKENS NOT APPROVED"
         );
         require(isVerifier[msg.sender] == false, "ALREADY A VERIFIER");
 
-        uint256 amount = 1000 * 10 ** 18;
-        TransferHelper.safeTransfer(address(ghoToken), msg.sender, amount);
+        uint256 amount = STAKING_AMOUNT * 10 ** 18;
+        TransferHelper.safeTransferFrom(
+            address(ghoToken),
+            msg.sender,
+            address(this),
+            amount
+        );
 
         isVerifier[msg.sender] = true;
     }
@@ -47,7 +55,7 @@ contract VerifierStaking is Ownable {
         require(isVerifier[msg.sender] == true, "NOT A VERIFIER");
         // User can unstake the tokens , if he is not doing the work properly
         isVerifier[msg.sender] = false;
-        uint256 amount = 1000 * 10 ** 18;
+        uint256 amount = STAKING_AMOUNT * 10 ** 18;
         TransferHelper.safeTransferFrom(
             address(ghoToken),
             address(this),
@@ -60,5 +68,23 @@ contract VerifierStaking is Ownable {
         require(isVerifier[verifier] == true, "NOT A VERIFIER");
         // Manager can block the stake , if the verifier is not doing the work properly
         isVerifier[verifier] = false;
+    }
+
+    // function to withdraw any locked assets handled by the controller
+    function withdrawLockedAssets(
+        address asset,
+        uint256 amount
+    ) external onlyOwner {
+        require(
+            amount > 0,
+            "InsuranceVault: Cannot withdraw 0 amount of tokens"
+        );
+        if (asset == address(0)) {
+            (bool sent, ) = payable(msg.sender).call{value: amount}("");
+
+            require(sent, "Failed to send Ether");
+        } else {
+            TransferHelper.safeTransfer(asset, msg.sender, amount);
+        }
     }
 }

@@ -63,6 +63,19 @@
 				"type": "event"
 			},
 			{
+				"inputs": [],
+				"name": "STAKING_AMOUNT",
+				"outputs": [
+					{
+						"internalType": "uint256",
+						"name": "",
+						"type": "uint256"
+					}
+				],
+				"stateMutability": "view",
+				"type": "function"
+			},
+			{
 				"inputs": [
 					{
 						"internalType": "address",
@@ -179,6 +192,24 @@
 				"outputs": [],
 				"stateMutability": "nonpayable",
 				"type": "function"
+			},
+			{
+				"inputs": [
+					{
+						"internalType": "address",
+						"name": "asset",
+						"type": "address"
+					},
+					{
+						"internalType": "uint256",
+						"name": "amount",
+						"type": "uint256"
+					}
+				],
+				"name": "withdrawLockedAssets",
+				"outputs": [],
+				"stateMutability": "nonpayable",
+				"type": "function"
 			}
 		],
 		"devdoc": {
@@ -263,11 +294,11 @@
 			]
 		},
 		"Staking.sol": {
-			"keccak256": "0x0b811eb87c32c3dbe1834b2e1d4cc7004adc3cb0b36c40f9fcc8efdfd52473e0",
+			"keccak256": "0xc27ac34e250867b65a02fddf09e6635097bed111e834e7ea38eb7f9f8acd4bcf",
 			"license": "UNLICENSED",
 			"urls": [
-				"bzz-raw://46651387b9988a0714b6c87e958cb432a0f7b0be0462ca79bcc20ad318e656a4",
-				"dweb:/ipfs/Qmbz6NioNpWqHETJs3xPxUJcKfugMD3xCCtA4LgQKTd5Un"
+				"bzz-raw://98cf34da15296b2238ecd8be05f8005e5b6781177e531b7ca0d2d0c9afdb36fe",
+				"dweb:/ipfs/QmRcbXWryxbEK7Ph67TmRnj9DKZUxwJ3wvvap4L8mrryDY"
 			]
 		}
 	},

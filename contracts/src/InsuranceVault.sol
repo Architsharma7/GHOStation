@@ -27,6 +27,7 @@ contract InsuranceVault is ERC4626 {
         bool hasDeposited;
         uint256 time;
     }
+
     mapping(address => DepositDetails) public _depositsData;
 
     struct InsuraneDetails {
@@ -84,15 +85,19 @@ contract InsuranceVault is ERC4626 {
         uint timestamp
     );
 
-    VerifierStaking public immutable staking;
+    VerifierStaking public staking;
     address public controller;
     // IERC20 public ghoToken = IERC20(0x40D16FC0246aD3160Ccc09B8D0D3A2cD28aE6C2f);
     IERC20 public ghoToken;
 
-    uint public constant FIXED_PERIOD = 30 days; //TODO: change to 6,12 months later
-    uint public constant PREMIUM_PERIOD = 10 days; // TODO: change to 30 days
-    uint public constant LOCKIN_PERIOD = 30 days; // TODO: change to 1 years
-    uint public constant COOLDOWN_PERIOD = 30 days; // TODO: change to 1 years
+    // PERIOD FOR DEPOSIT / WITHDRAW
+    uint public constant FIXED_PERIOD = 30 minutes; //TODO: change to 6,12 months later
+    // PERIOD FOR PREMIUM Payment
+    uint public constant PREMIUM_PERIOD = 10 minutes; // TODO: change to 30 days
+    // PERIOD OF CLAIM LOCKIN AFTER REGISTERATION
+    uint public constant LOCKIN_PERIOD = 30 minutes; // TODO: change to 1 years
+    // PERIOD OF CLAIM COLLDOWN
+    uint public constant COOLDOWN_PERIOD = 30 minutes; // TODO: change to 1 years
     uint public constant PREMIUM_RATE = 100; // 100 BPS = 1%
 
     constructor(
@@ -160,14 +165,20 @@ contract InsuranceVault is ERC4626 {
             "InsuranceVault: Cannot withdraw 0 amount of tokens"
         );
         if (asset == address(0)) {
-            (bool sent, bytes memory data) = payable(msg.sender).call{
-                value: amount
-            }("");
+            (bool sent, ) = payable(msg.sender).call{value: amount}("");
 
             require(sent, "Failed to send Ether");
         } else {
             TransferHelper.safeTransfer(asset, msg.sender, amount);
         }
+    }
+
+    function setStakingContract(address _staking) public {
+        require(
+            msg.sender == controller,
+            "InsuranceVault: Only controller can withdraw locked assets"
+        );
+        staking = VerifierStaking(_staking);
     }
 
     // Along with registeration , the company has to deposit the premium in GHO tokens Only
@@ -183,7 +194,7 @@ contract InsuranceVault is ERC4626 {
             insuredAmount > 0,
             "InsuranceVault: Insured amount should be greater then 0"
         );
-        uint premium = insuredAmount.mulDiv(PREMIUM_RATE,10000);
+        uint premium = insuredAmount.mulDiv(PREMIUM_RATE, 10000);
 
         // Transfer the premium from the company to the vault ,NOTE Should be approved to the vault
         TransferHelper.safeTransferFrom(
@@ -320,8 +331,8 @@ contract InsuranceVault is ERC4626 {
                 _claimProposals[claimId].claimAmount
             );
 
-
-            uint verifierFee = _claimProposals[claimId].claimAmount.mulDiv(50,
+            uint verifierFee = _claimProposals[claimId].claimAmount.mulDiv(
+                50,
                 10000
             );
 
@@ -346,7 +357,8 @@ contract InsuranceVault is ERC4626 {
             _claimProposals[claimId]._result = ClaimResult.INVALID;
             _claimProposals[claimId].verifierAddress = msg.sender;
 
-            uint verifierFee = _claimProposals[claimId].claimAmount.mulDiv(50,
+            uint verifierFee = _claimProposals[claimId].claimAmount.mulDiv(
+                50,
                 10000
             );
 

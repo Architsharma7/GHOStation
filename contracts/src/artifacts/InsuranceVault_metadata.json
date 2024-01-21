@@ -1579,11 +1579,11 @@
 			]
 		},
 		"InsuranceVault.sol": {
-			"keccak256": "0xd2a7df83204f490ef7461e0bc17dd515df39c582543903293e128d1e032ac4cd",
+			"keccak256": "0x780af91a634c96915d3cec9e1c63896067a24d569ac7d2eb8d2ad5aa0242d138",
 			"license": "UNLICENSED",
 			"urls": [
-				"bzz-raw://459d50952208fb94b8506512a552473b63bcddf7e9b864cfd974a8c77cbec6bc",
-				"dweb:/ipfs/QmbihpGZmEa89oT7NGcstYwBaSDghFSeBnKvogF6UA4Y7P"
+				"bzz-raw://8a16c154f5a6aa9ebe1f5bfa127473abafc1c0917eb7737098dc28343728198f",
+				"dweb:/ipfs/QmZdKFJM5gCak4tNmaYj1MdpY6fhc2pMhaadEtY5Fjixn7"
 			]
 		},
 		"Staking.sol": {
