@@ -1,6 +1,6 @@
 import lighthouse from "@lighthouse-web3/sdk";
 
-export const uploadProposal = async (obj: Object) => {
+export const uploadData = async (obj: Object) => {
   const blob = new Blob([JSON.stringify(obj)], { type: "application/json" });
   const file = [new File([blob], "proposal.json")];
   const output = await lighthouse.upload(

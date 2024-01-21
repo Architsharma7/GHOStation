@@ -5,6 +5,7 @@ import { Button } from "./ui/button";
 import Image from "next/image";
 import ghost from "@/assets/ghost6.png";
 import ghost2 from "@/assets/ghost.png";
+import { invalidateClaim, validateClaim } from "@/utils/InsurancevaultCalls";
 
 const mockData = [
   {
@@ -83,10 +84,10 @@ export function ProposalCard({
           <div className="tracking-wide font-[500] ">{reason}</div>
         </div>
         <div className="w-full mt-auto items-center flex justify-between gap-5">
-          <Button className="w-full" variant={"destructive"}>
+          <Button onClick={() => validateClaim("")} className="w-full" variant={"destructive"}>
             Reject
           </Button>
-          <Button className="w-full" variant={"custom"}>
+          <Button onClick={() => invalidateClaim("")} className="w-full" variant={"custom"}>
             Approve
           </Button>
         </div>

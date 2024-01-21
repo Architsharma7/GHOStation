@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import { Card } from "./ui/card";
 import { Separator } from "./ui/separator";
 import { Coins, Wallet2Icon } from "lucide-react";
@@ -8,11 +8,15 @@ import { useAccount, useBalance } from "wagmi";
 import { Input } from "./ui/input";
 import { Button } from "./ui/button";
 import VaultStats from "./vault-stats";
+import { depositFunds, withdrawFunds } from "@/utils/InsurancevaultCalls";
 
 export default function InsuranceVault() {
   const { address, isConnected } = useAccount();
+  const [depositAmount, setDepositAmount] = useState<number>(0);
+  const [withdrawAmount, setWithdrawAmount] = useState<number>(0);
   const balance = useBalance({
     address,
+    token: "0xc4bF5CbDaBE595361438F8c6a187bDc330539c60",
   });
   return (
     <div className=" w-full h-full">
@@ -50,19 +54,29 @@ export default function InsuranceVault() {
         <div className=" flex items-end justify-between pb-2 ">
           <div className=" space-y-1 w-8/12">
             <div>Deposit</div>
-            <Input placeholder="e.g: 18" />
+            <Input
+              onChange={(e) => setDepositAmount(e.target.value)}
+              placeholder="e.g: 18"
+            />
           </div>
-          <Button className=" w-28" variant={"custom"}>
+          <Button
+            onClick={() => depositFunds(depositAmount)}
+            className=" w-28"
+            variant={"custom"}
+          >
             Deposit
           </Button>
+        </div>
+        <div className="text-sm self-end">
+          Available: {balance.data?.formatted} {balance.data?.symbol}
         </div>
         <Separator className=" mb-4 mt-6" />
         <div className=" flex items-end justify-between ">
           <div className=" space-y-1 w-8/12">
             <div>Withdraw</div>
-            <Input placeholder="e.g: 10" />
+            <Input onChange={(e) => setWithdrawAmount(e.target.value)} placeholder="e.g: 10" />
           </div>
-          <Button className=" w-28" variant={"custom"}>
+          <Button onClick={() => withdrawFunds(withdrawAmount)} className=" w-28" variant={"custom"}>
             Withdraw
           </Button>
         </div>

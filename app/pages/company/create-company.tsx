@@ -11,25 +11,44 @@ import {
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Textarea } from "@/components/ui/textarea";
+import { registerInsurance } from "@/utils/InsurancevaultCalls";
+import { uploadData } from "@/utils/ipfsstorage";
 import { useState } from "react";
 
 export function CreateCompany() {
   const [protocolName, setProtocolName] = useState("");
-  const [address, setAddress] = useState("");
+  const [address, setAddress] = useState<`0x${string}`>("0x");
   const [amount, setAmount] = useState<number>(0);
   const [description, setDescription] = useState("");
+  const [contact, setContact] = useState<string>("");
+  const [webpage, setWebpage] = useState<string>("");
 
+  // struct InsuranceDetails {
+  //   address companyAddress;
+  //   string companyCID;
+  //   uint256 insuredAmount;
+  //   uint256 premium;
+  //   uint256 lastPremiumDepositTime;
+  //   uint256 registerationTime;
+  //   uint256 lastClaimTime;
+  //   uint256 lastClaimAmount;
+  //   }
 
-// struct InsuranceDetails {
-//   address companyAddress;
-//   string companyCID;
-//   uint256 insuredAmount;
-//   uint256 premium;
-//   uint256 lastPremiumDepositTime;
-//   uint256 registerationTime;
-//   uint256 lastClaimTime;
-//   uint256 lastClaimAmount;
-//   }
+  const registerCom = async () => {
+    try {
+      const data = {
+        protocolName: protocolName,
+        contact: contact,
+        webpage: webpage,
+        description: description,
+      };
+      const cid = await uploadData(data);
+      const tx = await registerInsurance(amount, cid, address);
+      console.log(tx);
+    } catch (error) {
+      console.log(error);
+    }
+  };
 
   return (
     <Dialog>
@@ -81,7 +100,7 @@ export function CreateCompany() {
           </div>
         </div>
         <DialogFooter>
-          <Button variant="custom" className="w-full">
+          <Button onClick={() => registerCom()} variant="custom" className="w-full">
             Register
           </Button>
         </DialogFooter>

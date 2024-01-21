@@ -7,12 +7,14 @@ import CustomConnectButton from "./custom-connect-btn";
 import Loader from "./ui/loader";
 import { useAccount, useBalance } from "wagmi";
 import { Button } from "./ui/button";
+import { stakeAsVerifier } from "@/utils/StakingContract";
 
 export default function VerifierStaking() {
   const [inputValue, setInputValue] = React.useState("");
   const { address, isConnected } = useAccount();
   const balance = useBalance({
     address,
+    token: '0xc4bF5CbDaBE595361438F8c6a187bDc330539c60', 
   });
 
   return (
@@ -32,7 +34,7 @@ export default function VerifierStaking() {
             value={inputValue}
             onChange={(e) => setInputValue(e.target.value)}
           />
-          <div className="text-sm self-end">Available: 34.3 max</div>
+          <div className="text-sm self-end">Available: {balance.data?.formatted} {balance.data?.symbol}</div>
         </div>
         <Card className="  p-3 space-y-4">
           <div className=" flex items-center justify-between ">
@@ -52,7 +54,7 @@ export default function VerifierStaking() {
       </div>
       <div className=" mt-3 w-full">
         {isConnected ? (
-          <Button variant={"custom"} className=" w-full ">
+          <Button onClick={() => stakeAsVerifier()} variant={"custom"} className=" w-full ">
             Initiate Transaction <Loader />
           </Button>
         ) : (
