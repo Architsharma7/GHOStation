@@ -1,6 +1,6 @@
 import React from "react";
 import { Card, CardDescription, CardHeader, CardTitle } from "./ui/card";
-import { ChevronLeft, FuelIcon } from "lucide-react";
+import { FuelIcon } from "lucide-react";
 import { Label } from "./ui/label";
 import { Input } from "./ui/input";
 import CustomConnectButton from "./custom-connect-btn";
@@ -8,17 +8,20 @@ import Loader from "./ui/loader";
 import { useAccount, useBalance } from "wagmi";
 import { Button } from "./ui/button";
 
-export default function Deposit() {
+export default function VerifierStaking() {
   const [inputValue, setInputValue] = React.useState("");
   const { address, isConnected } = useAccount();
   const balance = useBalance({
     address,
   });
+
   return (
     <Card className="border-0 border-neutral-300 shadow-[0_3px_10px_rgb(0,0,0,0.2)] bg-white min-h-96 p-6 px-8 rounded-xl space-y-3 ">
-      <CardHeader  className=" p-0">
-        <CardTitle>Deposit</CardTitle>
-        <CardDescription>Deposit token to earn yeild.</CardDescription>
+      <CardHeader className=" p-0">
+        <CardTitle>Verifier Staking</CardTitle>
+        <CardDescription>
+          Stake token to become a verifier on GHOSTATION
+        </CardDescription>
       </CardHeader>
       <div className=" space-y-5">
         <div className="flex flex-col items-start space-y-2">
@@ -29,30 +32,23 @@ export default function Deposit() {
             value={inputValue}
             onChange={(e) => setInputValue(e.target.value)}
           />
-          <div className="text-sm self-end">
-            Wallet Balance: {balance.data?.formatted} SEth
-          </div>
+          <div className="text-sm self-end">Available: 34.3 max</div>
         </div>
-
-        {inputValue && (
-          <Card className=" bg-[#bc9dff]/20 p-3 space-y-4">
-            <div className=" flex items-center justify-between ">
-              <div>Supply</div>
-              <div className=" flex items-center ">
-                {/* <ChevronRight /> */}
-                <ChevronLeft className=" h-4 w-4" />
-                <div>0.01 %</div>
-              </div>
+        <Card className="  p-3 space-y-4">
+          <div className=" flex items-center justify-between ">
+            <div>APY</div>
+            <div className=" flex items-center ">
+              <div>2.01 %</div>
             </div>
-            <div className="  flex items-center justify-between ">
-              <div>Gas</div>
-              <div className="text-sm flex items-center gap-2 ">
-                <FuelIcon className=" h-4 w-4" />
-                <div>4.3 USDC</div>
-              </div>
+          </div>
+          <div className="  flex items-center justify-between ">
+            <div>Estimated Gas</div>
+            <div className="text-sm flex items-center gap-2 ">
+              <FuelIcon className=" h-4 w-4" />
+              <div>$ 6.22 USDC</div>
             </div>
-          </Card>
-        )}
+          </div>
+        </Card>
       </div>
       <div className=" mt-3 w-full">
         {isConnected ? (
@@ -66,3 +62,11 @@ export default function Deposit() {
     </Card>
   );
 }
+
+// Verifier Staking Card
+
+// Staking Contract
+// Action Buttons like -->
+// Stake , Unstake , info on what they will earn
+
+// 0.5% of the claim Amount

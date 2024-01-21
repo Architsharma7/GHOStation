@@ -1,13 +1,11 @@
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
-import Pools from "./pools";
-import SupplyTable from "./supply-table";
 import Vault from "./vault";
 import DashboardCharts from "./dashboard-charts";
-import MintGHO from "./mint-gho";
-import { Card } from "./ui/card";
 import ghost from "@/assets/ghost.png";
 import Image from "next/image";
 import Proposals from "./proposals";
+import InsuranceVault from "./insurance-vault";
+import VerifierStaking from "./verifier-staking";
 
 export default function DashboardTabs() {
   return (
@@ -25,9 +23,12 @@ export default function DashboardTabs() {
       </TabsList>
       <div className=" z-10">
         <TabsContent value="dashboard" className="py-8 z-10">
-          <div className=" space-x-2 flex items-start justify-between">
-            <div className=" w-7/12">
+          <div className="gap-10 flex items-start justify-between">
+            <div className="w-full">
               <DashboardCharts />
+            </div>
+            <div className="w-full">
+              <VerifierStaking />
             </div>
           </div>
         </TabsContent>
@@ -38,12 +39,17 @@ export default function DashboardTabs() {
           value="earn"
           className=" flex items-start justify-normal gap-12 py-8"
         >
-          <div className=" w-5/12">
-            <Vault />
+          <div className=" grid grid-cols-12 gap-10">
+            <div className=" col-span-6">
+              <Vault />
+            </div>
+            <div className=" col-span-6">
+              <InsuranceVault />
+            </div>
           </div>
-          <div className=" w-7/12">
+          {/* <div className=" w-7/12">
             <Pools />
-          </div>
+          </div> */}
         </TabsContent>
       </div>
       <Image
