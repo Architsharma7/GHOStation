@@ -28,7 +28,7 @@ export default function InsuranceVault() {
   useEffect(() => {
     getTVL();
     getTotalshares();
-    getShareValue(10);
+    getShareValue();
   }, [])
   
 

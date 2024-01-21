@@ -108,7 +108,7 @@ export default function DashboardCharts() {
 
   useEffect(() => {
     const getData = async () => {
-      const data = await getUserHistory();
+      // const data = await getUserHistory();
       // if (data !== null) {
       // setGraphData(data);
       // }

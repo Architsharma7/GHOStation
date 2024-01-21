@@ -1,4 +1,4 @@
-import React from "react";
+import React, {useEffect, useState} from "react";
 import { Card } from "./ui/card";
 import MintGHO from "./mint-gho";
 import { Button } from "./ui/button";
@@ -6,6 +6,7 @@ import Image from "next/image";
 import ghost from "@/assets/ghost6.png";
 import ghost2 from "@/assets/ghost.png";
 import { invalidateClaim, validateClaim } from "@/utils/InsurancevaultCalls";
+import { getAllClaimProposals } from "@/utils/InsurancevaultCalls";
 
 const mockData = [
   {
@@ -38,15 +39,27 @@ const mockData = [
 ];
 
 export default function Proposals() {
+
+  const [claimProposals, setClaimProposals] = useState<any>([]);
+
+  useEffect(() => {
+    getClaims();
+  }, []);
+  
+  const getClaims = async() => {
+    const data = await getAllClaimProposals();
+    console.log(data);
+    setClaimProposals(data);
+  }
   return (
     <div className="grid grid-cols-12 gap-10">
-      {mockData.map((proposal, idx) => (
+      {claimProposals.map((proposal:any, idx:any) => (
         <div key={idx} className=" col-span-6">
           <ProposalCard
-            protocolName={proposal.protocolName}
-            address={proposal.address}
-            amount={proposal.amount}
-            reason={proposal.reason}
+            protocolName={proposal[3]}
+            address={proposal[0]}
+            amount={proposal[2]}
+            reason={`https://gateway.lighthouse.storage/ipfs/${proposal[3]}`}
           />
         </div>
       ))}

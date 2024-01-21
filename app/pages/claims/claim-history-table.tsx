@@ -1,4 +1,4 @@
-import React from "react";
+import React, {useEffect, useState} from "react";
 import {
   Table,
   TableBody,
@@ -25,7 +25,9 @@ import { Separator } from "@/components/ui/separator";
 //   uint256 lastClaimAmount;
 //   }
 
+
 export default function AllClaimsTable() {
+
   return (
     <Card className=" w-full shadow-[0_3px_10px_rgb(0,0,0,0.2)] min-h-96 p-6 px-8 rounded-xl space-y-3 ">
       <Table className="mt-4 w-full   ">
