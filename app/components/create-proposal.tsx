@@ -31,6 +31,7 @@ export function CreateProposal() {
     const cid = await uploadData(data);
     const tx = await requestClaim(amount, cid);
     console.log(tx);
+    return tx;
   };
 
   return (
