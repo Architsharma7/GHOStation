@@ -1,6 +1,7 @@
 import { ethers } from "ethers";
 import request from "request-promise-native";
 import { ABI } from "../constants/GHOTokenABI";
+import { parseEther } from "viem";
 
 export const fetchUserTransactions = async (
   Address: `0x${string}` | undefined
@@ -90,8 +91,8 @@ export const fetchUserTransactions = async (
 };
 
 export const fetchPremiumTransaction = async (
-  Address: `0x${string}` | undefined,
-  Premium: number | undefined
+  Address: `0x${string}`,
+  Premium: number
 ) => {
   try {
     const abi = ABI;
@@ -124,33 +125,36 @@ export const fetchPremiumTransaction = async (
     console.log(options);
     const response = await request(options);
     console.log(response);
+    const premiumValue = parseEther(Premium.toString());
+    console.log(premiumValue);
 
     for (const tx of response.result) {
-      if (tx.from.toLowerCase() === userAddress?.toLowerCase()) {
+      if (tx.value === `${premiumValue}`) {
         try {
-          const decodedData = await contractInterface.decodeFunctionData(
-            tx.input.slice(0, 10),
-            tx.input
-          );
-          console.log(`Transaction Hash: ${tx.hash}`);
-          console.log(`From: ${tx.from}`);
-          console.log(`To: ${decodedData.to}`);
-          console.log(`Value: ${tx.value}`);
-          console.log(
-            `Amount `,
-            (parseInt(decodedData.amount._hex) / 1e18).toString()
-          );
+          // const decodedData = await contractInterface.decodeFunctionData(
+          //   tx.input.slice(0, 10),
+          //   tx.input
+          // );
+          // console.log(`Transaction Hash: ${tx.hash}`);
+          // console.log(`From: ${tx.from}`);
+          // console.log(`To: ${decodedData.to}`);
+          // console.log(`Value: ${tx.value}`);
+          // console.log(
+          //   `Amount `,
+          //   (parseInt(decodedData.amount._hex) / 1e18).toString()
+          // );
           const transactionHash = await tx.hash;
           const senderAddress = await tx.from;
-          const recipientAddress = await decodedData.to;
+          const recipientAddress = await tx.to;
           const transactionValue = await tx.value;
-          const transactionAmount = await decodedData.amount._hex;
+
+          const txTime = await tx.timeStamp;
           return {
             transactionHash,
             senderAddress,
             recipientAddress,
             transactionValue,
-            transactionAmount,
+            txTime,
           };
         } catch (error) {
           console.log(error);
