@@ -1,3 +1,4 @@
+import { Dot } from "lucide-react";
 import {
   LineChart,
   Line,
@@ -14,15 +15,16 @@ import {
 } from "recharts";
 
 const data02 = [
-  { name: "Dex C", value: 40 },
-  { name: "Dex B", value: 24 },
-  { name: "Dex C", value: 35 },
-  { name: "Dex A", value: 11 },
+  { name: "Curve", value: 30 },
+  { name: "Uniswap", value: 30 },
+  { name: "Balancer", value: 40 },
 ];
 
 export default function VaultStats() {
   return (
     <>
+      <div className="text-sm">Token Distribution Chart</div>
+
       <PieChart width={430} height={250}>
         <Pie
           data={data02}
@@ -46,6 +48,9 @@ export default function VaultStats() {
           label
         />
       </PieChart>
+      <div className="text-sm flex items-center">
+        Curve : 30% <Dot /> Uniswap : 30% <Dot /> Balancer : 40%
+      </div>
     </>
   );
 }

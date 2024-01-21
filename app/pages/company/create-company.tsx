@@ -10,25 +10,37 @@ import {
 } from "@/components/ui/dialog";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
-import { Textarea } from "./ui/textarea";
+import { Textarea } from "@/components/ui/textarea";
 import { useState } from "react";
 
-export function CreateProposal() {
+export function CreateCompany() {
   const [protocolName, setProtocolName] = useState("");
   const [address, setAddress] = useState("");
   const [amount, setAmount] = useState<number>(0);
   const [description, setDescription] = useState("");
 
+
+// struct InsuranceDetails {
+//   address companyAddress;
+//   string companyCID;
+//   uint256 insuredAmount;
+//   uint256 premium;
+//   uint256 lastPremiumDepositTime;
+//   uint256 registerationTime;
+//   uint256 lastClaimTime;
+//   uint256 lastClaimAmount;
+//   }
+
   return (
     <Dialog>
       <DialogTrigger asChild>
-        <Button variant="custom">Create Proposal</Button>
+        <Button variant="custom">Register</Button>
       </DialogTrigger>
       <DialogContent className="sm:max-w-[450px] border-0 shadow-md bg-[#eae0ff]">
         <DialogHeader>
-          <DialogTitle>Claim Proposal</DialogTitle>
+          <DialogTitle>Register</DialogTitle>
           <DialogDescription>
-            Create a claim proposal for your protocol.
+            Fill your company details to get started with Ghostation.
           </DialogDescription>
         </DialogHeader>
         <div className="grid gap-4 py-4">
@@ -46,7 +58,7 @@ export function CreateProposal() {
           </div>
           <div className="grid grid-cols-4 items-center gap-4">
             <Label className="col-span-full">
-              Address to receive funds
+              Protocol Wallet Address
               <Input
                 value={address}
                 type="text"
@@ -58,7 +70,7 @@ export function CreateProposal() {
           </div>
           <div className="grid grid-cols-4 items-center gap-4">
             <Label className="col-span-full">
-              Amount required
+              Insurance Amount
               <Input
                 type="number"
                 value={amount}
@@ -67,21 +79,10 @@ export function CreateProposal() {
               />
             </Label>
           </div>
-          <div className="grid grid-cols-4 items-center gap-4">
-            <Label className="col-span-full">
-              Reason for insurance claim
-              <Textarea
-                value={description}
-                onChange={(e) => setDescription(e.target.value)}
-                placeholder="e.g: We were hacked by a group of hackers"
-                className="mt-2 w-full"
-              />
-            </Label>
-          </div>
         </div>
         <DialogFooter>
           <Button variant="custom" className="w-full">
-            File Claim
+            Register
           </Button>
         </DialogFooter>
       </DialogContent>

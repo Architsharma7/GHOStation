@@ -38,9 +38,9 @@ const mockData = [
 
 export default function Proposals() {
   return (
-    <div className=" flex items-stretch flex-wrap justify-between gap-12 py-6">
+    <div className="grid grid-cols-12 gap-10">
       {mockData.map((proposal, idx) => (
-        <div key={idx}>
+        <div key={idx} className=" col-span-6">
           <ProposalCard
             protocolName={proposal.protocolName}
             address={proposal.address}
@@ -65,7 +65,8 @@ export function ProposalCard({
   address: string;
 }) {
   return (
-    <div className=" max-w-lg min-w-[600px] relative h-full">
+    // max-w-lg min-w-[580px] px-2 
+    <div className="relative h-full w-full">
       <Card className="border-0 relative h-full border-neutral-300 shadow-[0_3px_10px_rgb(0,0,0,0.2)] bg-white min-h-96 px-6 py-8 rounded-xl z-10 flex flex-col ">
         <div className="flex-col flex items-stretch justify-between gap-5 z-10 mb-6">
           <div className=" flex flex-col gap-2 bg-[#bc9dff]/30 p-4 rounded-lg">
