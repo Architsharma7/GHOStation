@@ -106,34 +106,34 @@ export default function DashboardCharts() {
 
   // console.log("userSummaryHistory", formattedData);
 
-  useEffect(() => {
-    const getData = async () => {
-      const data = await getUserHistory();
-      // if (data !== null) {
-      // setGraphData(data);
-      // }
-    };
+  // useEffect(() => {
+  //   const getData = async () => {
+  //     const data = await getUserHistory();
+  //     // if (data !== null) {
+  //     // setGraphData(data);
+  //     // }
+  //   };
 
-    // Create individual datasets for each key
-    const datasets =
-      userSummaryHistory &&
-      Object.keys(userSummaryHistory && userSummaryHistory[0]).map((key) => {
-        return userSummaryHistory.map((item: any) => ({
-          timestamp: item.timestamp,
-          [key]: item[key],
-        }));
-      });
+  //   // Create individual datasets for each key
+  //   const datasets =
+  //     userSummaryHistory &&
+  //     Object.keys(userSummaryHistory && userSummaryHistory[0]).map((key) => {
+  //       return userSummaryHistory.map((item: any) => ({
+  //         timestamp: item.timestamp,
+  //         [key]: item[key],
+  //       }));
+  //     });
 
-    setGraphData(datasets);
+  //   setGraphData(datasets);
 
-    getData();
-  }, [userSummaryHistory]);
+  //   getData();
+  // }, [userSummaryHistory]);
 
   return (
     <Card className="  bg-white flex items-center flex-wrap gap-10 w-fit rounded-xl shadow-[0_3px_10px_rgb(0,0,0,0.2)] border-0 p-5  ">
       {graphData &&
         graphData.map(
-          (data:any, index:any) =>
+          (data: any, index: any) =>
             data && (
               <LineChart
                 key={index}
