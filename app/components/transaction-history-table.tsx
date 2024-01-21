@@ -51,10 +51,23 @@ export default function TransactionHistoryTable() {
             data.map((data: any, idx: any) => {
               return (
                 <TableRow className=" hover:bg-white/10 cursor-pointer">
-                  <TableCell>{`${data.senderAddress.slice(0,19)}...`}</TableCell>
-                  <TableCell>{`${data.recipientAddress.slice(0,19)}...`}</TableCell>
-                  <TableCell className="text-blue-500"><a href={`https://sepolia.etherscan.io/${data.transactionHash}`} target="_blank">{`${data.transactionHash.slice(0,19)}...`}</a></TableCell>
-                  <TableCell>{(parseInt(data.transactionAmount)/1e18)}</TableCell>
+                  <TableCell>{`${data.senderAddress.slice(
+                    0,
+                    19
+                  )}...`}</TableCell>
+                  <TableCell>{`${data.recipientAddress.slice(
+                    0,
+                    19
+                  )}...`}</TableCell>
+                  <TableCell className="text-blue-500">
+                    <a
+                      href={`https://sepolia.etherscan.io/${data.transactionHash}`}
+                      target="_blank"
+                    >{`${data.transactionHash.slice(0, 19)}...`}</a>
+                  </TableCell>
+                  <TableCell>
+                    {parseInt(data.transactionAmount) / 1e18}
+                  </TableCell>
                 </TableRow>
               );
             })}

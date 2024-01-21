@@ -15,14 +15,16 @@ import { Button } from "../../components/ui/button";
 import { depositPremium } from "@/utils/InsurancevaultCalls";
 import { Badge } from "@/components/ui/badge";
 import { Separator } from "@/components/ui/separator";
+import { formatEther, parseEther } from "viem";
 
-export default function DepositPremium() {
+export default function DepositPremium(props: any) {
   const [inputValue, setInputValue] = useState<Number>();
   const { address, isConnected } = useAccount();
   const balance = useBalance({
     address,
     token: "0xc4bF5CbDaBE595361438F8c6a187bDc330539c60",
   });
+
   return (
     <Card className="border-0 h-full border-neutral-300 shadow-[0_3px_10px_rgb(0,0,0,0.2)] gradient min-h-96 p-6 px-8 rounded-xl space-y-3 ">
       <CardHeader className=" p-0">
@@ -45,7 +47,9 @@ export default function DepositPremium() {
           <Separator />
           <div className="flex items-center w-full justify-between">
             <div>Premium amount</div>
-            <div>30 GHO </div>
+            <div>
+              {props.amount ? Number(formatEther(props.amount)) : 0} GHO
+            </div>
           </div>
           {/* <Input
             type="number"
@@ -80,7 +84,11 @@ export default function DepositPremium() {
       <div className="w-full">
         {isConnected ? (
           <Button
-            onClick={() => depositPremium(inputValue as number)}
+            onClick={() =>
+              depositPremium(
+                props.amount ? Number(formatEther(props.amount)) : 0
+              )
+            }
             variant={"custom"}
             className=" w-full "
           >

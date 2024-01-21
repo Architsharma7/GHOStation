@@ -55,10 +55,10 @@ export const fetchUserTransactions = async (
           );
           const transactionHash = await tx.hash;
           const senderAddress = await tx.from;
-          const recipientAddress = await decodedData.to;
+          const recipientAddress = await tx.to;
           const transactionValue = await tx.value;
           const transactionAmount = await decodedData.amount._hex;
-          const transactionObject =  {
+          const transactionObject = {
             transactionHash: transactionHash,
             senderAddress: senderAddress,
             recipientAddress: recipientAddress,
@@ -66,7 +66,6 @@ export const fetchUserTransactions = async (
             transactionAmount: transactionAmount,
           };
           await transactionsArray.push(transactionObject);
-          return await transactionsArray;
         } catch (error) {
           console.log(error);
         }
@@ -82,9 +81,9 @@ export const fetchUserTransactions = async (
       page += 1;
     }
     if (shouldBreak) {
-      return;
+      return await transactionsArray;
     }
-    return;
+    return await transactionsArray;
   } catch (error) {
     console.log(error);
   }
@@ -128,34 +127,26 @@ export const fetchPremiumTransaction = async (
     const premiumValue = parseEther(Premium.toString());
     console.log(premiumValue);
 
+    const transactionsArray = [];
+
     for (const tx of response.result) {
       if (tx.value === `${premiumValue}`) {
         try {
-          // const decodedData = await contractInterface.decodeFunctionData(
-          //   tx.input.slice(0, 10),
-          //   tx.input
-          // );
-          // console.log(`Transaction Hash: ${tx.hash}`);
-          // console.log(`From: ${tx.from}`);
-          // console.log(`To: ${decodedData.to}`);
-          // console.log(`Value: ${tx.value}`);
-          // console.log(
-          //   `Amount `,
-          //   (parseInt(decodedData.amount._hex) / 1e18).toString()
-          // );
           const transactionHash = await tx.hash;
           const senderAddress = await tx.from;
           const recipientAddress = await tx.to;
           const transactionValue = await tx.value;
 
           const txTime = await tx.timeStamp;
-          return {
+          const transactionObject = {
             transactionHash,
             senderAddress,
             recipientAddress,
             transactionValue,
             txTime,
           };
+
+          await transactionsArray.push(transactionObject);
         } catch (error) {
           console.log(error);
         }
@@ -171,9 +162,9 @@ export const fetchPremiumTransaction = async (
       page += 1;
     }
     if (shouldBreak) {
-      return;
+      return await transactionsArray;
     }
-    return;
+    return await transactionsArray;
   } catch (error) {
     console.log(error);
   }

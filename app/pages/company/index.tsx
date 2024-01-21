@@ -6,6 +6,7 @@ import DepositPremium from "./deposit-premium";
 import { Card, CardTitle } from "@/components/ui/card";
 import { getCompanyInsuranceData } from "@/utils/InsurancevaultCalls";
 import { useAccount } from "wagmi";
+import RegisteredCompanyDetails from "./registered-company-details";
 
 export default function Company() {
   const [companyDetails, setCompanyDetails] = useState<any>();
@@ -33,11 +34,10 @@ export default function Company() {
       </div>
       <div className=" flex items-stretch gap-10 justify-between">
         <div className=" w-full">
-          <CreateCompany />
-          {/* <RegisteredCompanyDetails /> */}
+          {companyDetails ? <RegisteredCompanyDetails /> : <CreateCompany />}
         </div>
         <div className=" w-full">
-          <DepositPremium />
+          <DepositPremium amount={companyDetails ? companyDetails[3] : 0} />
         </div>
       </div>
 
