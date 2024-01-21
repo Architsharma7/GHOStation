@@ -1,12 +1,21 @@
 import { STAKING_ABI, STAKING_ADDRESS } from "@/constants/StakingContract";
-import { getAccount, getPublicClient, getWalletClient } from "wagmi/actions";
+import {
+  getAccount,
+  getPublicClient,
+  getWalletClient,
+  getNetwork,
+} from "wagmi/actions";
 import { getContract, parseEther } from "viem";
 import { approveGHO } from "./GHOToken";
 
 export const stakeAsVerifier = async () => {
   const { address: account } = getAccount();
   const publicClient = getPublicClient();
-  const walletClient = await getWalletClient();
+  const network = getNetwork();
+  if (!network) {
+    return;
+  }
+  const walletClient = await getWalletClient({ chainId: network?.chain.id });
   if (!account) {
     return;
   }

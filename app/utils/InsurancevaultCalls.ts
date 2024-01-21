@@ -2,14 +2,23 @@ import {
   INSURANCE_VAULT_ABI,
   INSURANCE_VAULT_ADDRESS,
 } from "@/constants/InsuranceVault";
-import { getAccount, getPublicClient, getWalletClient } from "wagmi/actions";
+import {
+  getAccount,
+  getPublicClient,
+  getWalletClient,
+  getNetwork,
+} from "wagmi/actions";
 import { getContract, parseEther } from "viem";
 import { approveGHO } from "./GHOToken";
 
 export const depositFunds = async (amount: number) => {
   const { address: account } = getAccount();
   const publicClient = getPublicClient();
-  const walletClient = await getWalletClient();
+  const network = getNetwork();
+  if (!network) {
+    return;
+  }
+  const walletClient = await getWalletClient({ chainId: network?.chain.id });
   if (!account) {
     return;
   }
@@ -47,7 +56,11 @@ export const depositFunds = async (amount: number) => {
 export const withdrawFunds = async (amount: number) => {
   const { address: account } = getAccount();
   const publicClient = getPublicClient();
-  const walletClient = await getWalletClient();
+  const network = getNetwork();
+  if (!network) {
+    return;
+  }
+  const walletClient = await getWalletClient({ chainId: network?.chain.id });
   if (!account) {
     return;
   }
@@ -87,17 +100,24 @@ export const registerInsurance = async (
 ) => {
   const { address: account } = getAccount();
   const publicClient = getPublicClient();
-  const walletClient = await getWalletClient();
+  const network = getNetwork();
+  if (!network) {
+    return;
+  }
+  const walletClient = await getWalletClient({ chainId: network?.chain.id });
   if (!account) {
     return;
   }
+
+  // calculate 1.5% of the total Insured amount
+  const premiumAmount = insuredAmount * 0.015;
 
   const INSURANCE_VAULT_CONTRACT = getContract({
     address: INSURANCE_VAULT_ADDRESS,
     abi: INSURANCE_VAULT_ABI,
   });
 
-  await approveGHO(INSURANCE_VAULT_ADDRESS, insuredAmount);
+  await approveGHO(INSURANCE_VAULT_ADDRESS, premiumAmount);
 
   const data = await publicClient.simulateContract({
     account: account,
@@ -122,11 +142,14 @@ export const registerInsurance = async (
   };
 };
 
-
 export const depositPremium = async (premiumAmount: number) => {
   const { address: account } = getAccount();
   const publicClient = getPublicClient();
-  const walletClient = await getWalletClient();
+  const network = getNetwork();
+  if (!network) {
+    return;
+  }
+  const walletClient = await getWalletClient({ chainId: network?.chain.id });
   if (!account) {
     return;
   }
@@ -160,11 +183,14 @@ export const depositPremium = async (premiumAmount: number) => {
   };
 };
 
-
 export const requestClaim = async (claimAmount: number, proofCID: string) => {
   const { address: account } = getAccount();
   const publicClient = getPublicClient();
-  const walletClient = await getWalletClient();
+  const network = getNetwork();
+  if (!network) {
+    return;
+  }
+  const walletClient = await getWalletClient({ chainId: network?.chain.id });
   if (!account) {
     return;
   }
@@ -200,7 +226,11 @@ export const requestClaim = async (claimAmount: number, proofCID: string) => {
 export const validateClaim = async (claimId: string) => {
   const { address: account } = getAccount();
   const publicClient = getPublicClient();
-  const walletClient = await getWalletClient();
+  const network = getNetwork();
+  if (!network) {
+    return;
+  }
+  const walletClient = await getWalletClient({ chainId: network?.chain.id });
   if (!account) {
     return;
   }
@@ -230,7 +260,11 @@ export const validateClaim = async (claimId: string) => {
 export const invalidateClaim = async (claimId: string) => {
   const { address: account } = getAccount();
   const publicClient = getPublicClient();
-  const walletClient = await getWalletClient();
+  const network = getNetwork();
+  if (!network) {
+    return;
+  }
+  const walletClient = await getWalletClient({ chainId: network?.chain.id });
   if (!account) {
     return;
   }
@@ -260,7 +294,11 @@ export const invalidateClaim = async (claimId: string) => {
 export const raiseDisputeForClaims = async (claimId: number) => {
   const { address: account } = getAccount();
   const publicClient = getPublicClient();
-  const walletClient = await getWalletClient();
+  const network = getNetwork();
+  if (!network) {
+    return;
+  }
+  const walletClient = await getWalletClient({ chainId: network?.chain.id });
   if (!account) {
     return;
   }

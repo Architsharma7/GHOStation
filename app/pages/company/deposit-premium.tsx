@@ -1,4 +1,4 @@
-import React, {useState} from "react";
+import React, { useState } from "react";
 import {
   Card,
   CardDescription,
@@ -37,6 +37,7 @@ export default function DepositPremium() {
             placeholder="e.g: 18"
             onChange={(e) => setInputValue(Number(e.target.value))}
           />
+
           <div className="text-sm self-end">
             Wallet Balance: {balance.data?.formatted} {balance.data?.symbol}
           </div>
@@ -63,7 +64,11 @@ export default function DepositPremium() {
       </div>
       <div className="w-full">
         {isConnected ? (
-          <Button onClick={() => depositPremium(inputValue as number)} variant={"custom"} className=" w-full ">
+          <Button
+            onClick={() => depositPremium(inputValue as number)}
+            variant={"custom"}
+            className=" w-full "
+          >
             Initiate Transaction <Loader />
           </Button>
         ) : (

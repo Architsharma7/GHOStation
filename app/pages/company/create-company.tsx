@@ -13,12 +13,13 @@ import { Label } from "@/components/ui/label";
 import { Textarea } from "@/components/ui/textarea";
 import { registerInsurance } from "@/utils/InsurancevaultCalls";
 import { uploadData } from "@/utils/ipfsstorage";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 
 export function CreateCompany() {
   const [protocolName, setProtocolName] = useState("");
   const [address, setAddress] = useState<`0x${string}`>("0x");
   const [amount, setAmount] = useState<number>(0);
+  const [premium, setPremium] = useState<number>(0);
   const [description, setDescription] = useState("");
   const [contact, setContact] = useState<string>("");
   const [webpage, setWebpage] = useState<string>("");
@@ -33,6 +34,20 @@ export function CreateCompany() {
   //   uint256 lastClaimTime;
   //   uint256 lastClaimAmount;
   //   }
+
+  useEffect(() => {
+    if (amount) {
+      const premium = calculatePremium(amount);
+      const premiumInEther = premium / 10 ** 18;
+      setPremium(premiumInEther);
+    }
+  }, [amount]);
+
+  const calculatePremium = (_amount: number) => {
+    // calculate 1.5% of the total Insured amount
+    const amountInWei = _amount * 10 ** 18;
+    return (amountInWei * 1.5) / 100;
+  };
 
   const registerCom = async () => {
     try {
@@ -97,10 +112,15 @@ export function CreateCompany() {
                 className="mt-2 w-full"
               />
             </Label>
+            {premium && <p className="col-span-full">Premium: {premium}</p>}
           </div>
         </div>
         <DialogFooter>
-          <Button onClick={() => registerCom()} variant="custom" className="w-full">
+          <Button
+            onClick={() => registerCom()}
+            variant="custom"
+            className="w-full"
+          >
             Register
           </Button>
         </DialogFooter>
