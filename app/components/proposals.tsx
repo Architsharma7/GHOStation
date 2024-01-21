@@ -60,6 +60,7 @@ export default function Proposals() {
             address={proposal[0]}
             amount={proposal[2]}
             reason={`https://gateway.lighthouse.storage/ipfs/${proposal[3]}`}
+            claimId={idx}
           />
         </div>
       ))}
@@ -72,11 +73,13 @@ export function ProposalCard({
   amount,
   reason,
   address,
+  claimId
 }: {
   protocolName: string;
   amount: number;
   reason: string;
   address: string;
+  claimId: string;
 }) {
   return (
     // max-w-lg min-w-[580px] px-2 
@@ -97,10 +100,10 @@ export function ProposalCard({
           <div className="tracking-wide font-[500] ">{reason}</div>
         </div>
         <div className="w-full mt-auto items-center flex justify-between gap-5">
-          <Button onClick={() => validateClaim("")} className="w-full" variant={"destructive"}>
+          <Button onClick={() => validateClaim(claimId)} className="w-full" variant={"destructive"}>
             Reject
           </Button>
-          <Button onClick={() => invalidateClaim("")} className="w-full" variant={"custom"}>
+          <Button onClick={() => invalidateClaim(claimId)} className="w-full" variant={"custom"}>
             Approve
           </Button>
         </div>
