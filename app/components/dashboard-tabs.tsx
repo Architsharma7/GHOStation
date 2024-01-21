@@ -6,6 +6,8 @@ import Image from "next/image";
 import Proposals from "./proposals";
 import InsuranceVault from "./insurance-vault";
 import VerifierStaking from "./verifier-staking";
+import { Card, CardDescription, CardTitle } from "./ui/card";
+import TransactionHistoryTable from "./transaction-history-table";
 
 export default function DashboardTabs() {
   return (
@@ -23,13 +25,42 @@ export default function DashboardTabs() {
       </TabsList>
       <div className=" z-10">
         <TabsContent value="dashboard" className="py-8 z-10">
-          <div className="gap-10 flex items-start justify-between">
-            <div className="w-full">
-              <DashboardCharts />
+          <div className="w-full space-y-8">
+            <Card className="relative p-6 space-y-2  shadow-[0_3px_10px_rgb(0,0,0,0.2)] border-0">
+              <CardTitle>Become a verifier</CardTitle>
+              <CardDescription>
+                Stake your GHO tokens to become a verifier on GHOSTATION
+              </CardDescription>
+            </Card>
+            <div className=" flex items-start justify-between gap-10">
+              <div className=" w-full">
+                <VerifierStaking />
+              </div>
+              <div className=" w-full">
+                <TransactionHistoryTable />
+              </div>
             </div>
-            <div className="w-full">
-              <VerifierStaking />
-            </div>
+
+            <Image
+              src={ghost}
+              alt="ghost"
+              className="absolute bottom-[630px]  left-20 -z-10 w-80"
+            />
+            <Image
+              src={ghost}
+              alt="ghost"
+              className="absolute bottom-[250px] transform -scale-x-100 right-20 -z-30 w-80 -scale-1 "
+            />
+          </div>
+          <div className="">
+            <Card className="relative p-6 space-y-2 my-10 bg-violet-50 shadow-[0_3px_10px_rgb(0,0,0,0.2)] border-0">
+              <CardTitle>Analytics</CardTitle>
+              <CardDescription>
+                Analytics of your wallet and GHO transactions
+              </CardDescription>
+            </Card>
+
+            <DashboardCharts />
           </div>
         </TabsContent>
         <TabsContent value="tools" className="py-8">
@@ -55,7 +86,7 @@ export default function DashboardTabs() {
       <Image
         src={ghost}
         alt="ghost"
-        className="absolute top-16 left-14 -z-10 w-80"
+        className="absolute top-24 left-14 -z-10 w-80"
       />
       <Image
         src={ghost}
