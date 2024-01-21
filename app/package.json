@@ -13,6 +13,7 @@
     "@aave/math-utils": "^1.21.1",
     "@balancer-labs/sdk": "^1.1.5",
     "@bgd-labs/aave-address-book": "^2.15.2",
+    "@lighthouse-web3/sdk": "^0.3.0",
     "@metamask/providers": "^14.0.2",
     "@radix-ui/react-dialog": "^1.0.5",
     "@radix-ui/react-label": "^2.0.2",
