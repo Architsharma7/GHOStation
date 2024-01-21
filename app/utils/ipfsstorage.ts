@@ -13,4 +13,5 @@ export const uploadProposal = async (obj: Object) => {
 
 export const getFile = async (hash: string) => {
     const fileInfo = await lighthouse.getFileInfo(hash);
+    return fileInfo;   
 }
