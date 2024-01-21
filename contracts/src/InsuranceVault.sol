@@ -30,8 +30,9 @@ contract InsuranceVault is ERC4626 {
 
     mapping(address => DepositDetails) public _depositsData;
 
-    struct InsuraneDetails {
+    struct InsuranceDetails {
         address companyAddress;
+        string companyCID;
         uint256 insuredAmount;
         uint256 premium;
         uint256 lastPremiumDepositTime;
@@ -40,7 +41,7 @@ contract InsuranceVault is ERC4626 {
         uint256 lastClaimAmount;
     }
 
-    mapping(address => InsuraneDetails) public _insuranceData;
+    mapping(address => InsuranceDetails) public _insuranceData;
 
     enum ClaimStatus {
         PENDING,
@@ -93,12 +94,12 @@ contract InsuranceVault is ERC4626 {
     // PERIOD FOR DEPOSIT / WITHDRAW
     uint public constant FIXED_PERIOD = 30 minutes; //TODO: change to 6,12 months later
     // PERIOD FOR PREMIUM Payment
-    uint public constant PREMIUM_PERIOD = 10 minutes; // TODO: change to 30 days
+    uint public constant PREMIUM_PERIOD = 1 days; // TODO: change to 30 days
     // PERIOD OF CLAIM LOCKIN AFTER REGISTERATION
     uint public constant LOCKIN_PERIOD = 30 minutes; // TODO: change to 1 years
-    // PERIOD OF CLAIM COLLDOWN
+    // PERIOD OF CLAIM COOLDOWN
     uint public constant COOLDOWN_PERIOD = 30 minutes; // TODO: change to 1 years
-    uint public constant PREMIUM_RATE = 100; // 100 BPS = 1%
+    uint public constant PREMIUM_RATE = 150; // 100 BPS = 1%
 
     constructor(
         address token0,
@@ -184,6 +185,7 @@ contract InsuranceVault is ERC4626 {
     // Along with registeration , the company has to deposit the premium in GHO tokens Only
     function registerInsurance(
         address companyAddress,
+        string memory companyCID,
         uint insuredAmount
     ) public {
         require(
@@ -204,8 +206,9 @@ contract InsuranceVault is ERC4626 {
             premium
         );
 
-        _insuranceData[companyAddress] = InsuraneDetails(
+        _insuranceData[companyAddress] = InsuranceDetails(
             companyAddress,
+            companyCID,
             insuredAmount,
             premium,
             block.timestamp,
@@ -276,6 +279,10 @@ contract InsuranceVault is ERC4626 {
             claimAmount <= _insuranceData[msg.sender].insuredAmount,
             "InsuranceVault: Claim amount should be less then insured amount"
         );
+        require(
+            claimAmount <= ghoToken.balanceOf(address(this)),
+            "InsuranceVault: Insufficient funds"
+        );
 
         uint claimId = totalClaimProposals;
 
@@ -309,6 +316,10 @@ contract InsuranceVault is ERC4626 {
         require(
             _claimProposals[claimId]._status == ClaimStatus.PENDING,
             "InsuranceVault: Claim already processed"
+        );
+        require(
+            _claimProposals[claimId].verifierAddress == address(0),
+            "InsuranceVault: Verifier already Present"
         );
 
         if (_decision == ClaimResult.VALID) {
@@ -391,6 +402,8 @@ contract InsuranceVault is ERC4626 {
             _claimProposals[claimId]._result == ClaimResult.INVALID,
             "InsuranceVault: Claim not invalid"
         );
+
+        require(balanceOf(msg.sender) > 0, "InsuranceVault: Not a shareholder");
 
         // if the claim is invalid , the verifier still get's the rewards , and the pool get's the rest of the amount
         // the pool can raise a dispute , and if the dispute is valid , the pool get's the stake of the verifier , and the claim is cancelled

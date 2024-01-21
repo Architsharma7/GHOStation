@@ -586,6 +586,11 @@
 						"type": "address"
 					},
 					{
+						"internalType": "string",
+						"name": "companyCID",
+						"type": "string"
+					},
+					{
 						"internalType": "uint256",
 						"name": "insuredAmount",
 						"type": "uint256"
@@ -1046,6 +1051,11 @@
 						"type": "address"
 					},
 					{
+						"internalType": "string",
+						"name": "companyCID",
+						"type": "string"
+					},
+					{
 						"internalType": "uint256",
 						"name": "insuredAmount",
 						"type": "uint256"
@@ -1077,6 +1087,19 @@
 						"type": "uint256"
 					}
 				],
+				"stateMutability": "nonpayable",
+				"type": "function"
+			},
+			{
+				"inputs": [
+					{
+						"internalType": "address",
+						"name": "_staking",
+						"type": "address"
+					}
+				],
+				"name": "setStakingContract",
+				"outputs": [],
 				"stateMutability": "nonpayable",
 				"type": "function"
 			},
@@ -1579,19 +1602,19 @@
 			]
 		},
 		"InsuranceVault.sol": {
-			"keccak256": "0x780af91a634c96915d3cec9e1c63896067a24d569ac7d2eb8d2ad5aa0242d138",
+			"keccak256": "0xe373aeb531b02c53568f765456a6d38f2424105775f1020bcdbb6ea93a87335d",
 			"license": "UNLICENSED",
 			"urls": [
-				"bzz-raw://8a16c154f5a6aa9ebe1f5bfa127473abafc1c0917eb7737098dc28343728198f",
-				"dweb:/ipfs/QmZdKFJM5gCak4tNmaYj1MdpY6fhc2pMhaadEtY5Fjixn7"
+				"bzz-raw://e54715d2a9aa8b04eabc00249f8ad93f124c4a075d04eb1633aef95176fd0bc3",
+				"dweb:/ipfs/QmSYeCwja67jxdcYgw7zZsmUZxxjBpJ3ixBA5SKKvVucwL"
 			]
 		},
 		"Staking.sol": {
-			"keccak256": "0x0b811eb87c32c3dbe1834b2e1d4cc7004adc3cb0b36c40f9fcc8efdfd52473e0",
+			"keccak256": "0xc27ac34e250867b65a02fddf09e6635097bed111e834e7ea38eb7f9f8acd4bcf",
 			"license": "UNLICENSED",
 			"urls": [
-				"bzz-raw://46651387b9988a0714b6c87e958cb432a0f7b0be0462ca79bcc20ad318e656a4",
-				"dweb:/ipfs/Qmbz6NioNpWqHETJs3xPxUJcKfugMD3xCCtA4LgQKTd5Un"
+				"bzz-raw://98cf34da15296b2238ecd8be05f8005e5b6781177e531b7ca0d2d0c9afdb36fe",
+				"dweb:/ipfs/QmRcbXWryxbEK7Ph67TmRnj9DKZUxwJ3wvvap4L8mrryDY"
 			]
 		}
 	},
