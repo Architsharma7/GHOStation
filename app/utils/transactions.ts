@@ -36,6 +36,8 @@ export const fetchUserTransactions = async (
     console.log(options);
     const response = await request(options);
 
+    const transactionsArray = [];
+
     for (const tx of response.result) {
       if (tx.from.toLowerCase() === userAddress?.toLowerCase()) {
         try {
@@ -56,13 +58,15 @@ export const fetchUserTransactions = async (
           const recipientAddress = await decodedData.to;
           const transactionValue = await tx.value;
           const transactionAmount = await decodedData.amount._hex;
-          return {
-            transactionHash,
-            senderAddress,
-            recipientAddress,
-            transactionValue,
-            transactionAmount,
+          const transactionObject =  {
+            transactionHash: transactionHash,
+            senderAddress: senderAddress,
+            recipientAddress: recipientAddress,
+            transactionValue: transactionValue,
+            transactionAmount: transactionAmount,
           };
+          await transactionsArray.push(transactionObject);
+          return await transactionsArray;
         } catch (error) {
           console.log(error);
         }
