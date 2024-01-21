@@ -13,6 +13,8 @@ import Loader from "../../components/ui/loader";
 import { useAccount, useBalance } from "wagmi";
 import { Button } from "../../components/ui/button";
 import { depositPremium } from "@/utils/InsurancevaultCalls";
+import { Badge } from "@/components/ui/badge";
+import { Separator } from "@/components/ui/separator";
 
 export default function DepositPremium() {
   const [inputValue, setInputValue] = useState<Number>();
@@ -22,7 +24,7 @@ export default function DepositPremium() {
     token: "0xc4bF5CbDaBE595361438F8c6a187bDc330539c60",
   });
   return (
-    <Card className="border-0 border-neutral-300 shadow-[0_3px_10px_rgb(0,0,0,0.2)] bg-white min-h-96 p-6 px-8 rounded-xl space-y-3 ">
+    <Card className="border-0 h-full border-neutral-300 shadow-[0_3px_10px_rgb(0,0,0,0.2)] gradient min-h-96 p-6 px-8 rounded-xl space-y-3 ">
       <CardHeader className=" p-0">
         <CardTitle>Deposit Premium</CardTitle>
         <CardDescription>
@@ -30,20 +32,33 @@ export default function DepositPremium() {
         </CardDescription>
       </CardHeader>
       <div className=" space-y-6">
-        <div className="flex flex-col items-start space-y-2 mt-6">
-          <Label htmlFor="terms">Amount</Label>
-          <Input
+        <div className="flex bg-white p-4 rounded-lg shadow-lg flex-col items-start space-y-5 mt-6">
+          <div className="flex items-start w-full justify-between">
+            <div>
+              <div>Your next premium is due on :</div>
+              <div className="mt-1 text-xs rounded-md w-full">
+                Please make sure you make the payment before due date
+              </div>
+            </div>
+            <div>30/01/2024</div>
+          </div>
+          <Separator />
+          <div className="flex items-center w-full justify-between">
+            <div>Premium amount</div>
+            <div>30 GHO </div>
+          </div>
+          {/* <Input
             type="number"
             placeholder="e.g: 18"
             onChange={(e) => setInputValue(Number(e.target.value))}
-          />
+          /> */}
 
-          <div className="text-sm self-end">
+          {/* <div className="text-sm self-end">
             Wallet Balance: {balance.data?.formatted} {balance.data?.symbol}
-          </div>
+          </div> */}
         </div>
 
-        <Card className=" bg-[#bc9dff]/20 p-3 space-y-4">
+        <Card className=" bg-[#bc9dff]0 bg-white p-3 space-y-4">
           {/*<div className=" flex items-center justify-between ">
             <div>Supply</div>
              <div className=" flex items-center ">

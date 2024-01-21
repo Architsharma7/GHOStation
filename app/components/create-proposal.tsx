@@ -35,7 +35,7 @@ export function CreateProposal() {
       <DialogTrigger asChild>
         <Button variant="custom">Create Proposal</Button>
       </DialogTrigger>
-      <DialogContent className="sm:max-w-[450px] border-0 shadow-md bg-[#eae0ff]">
+      <DialogContent className="sm:max-w-[450px] border-0 shadow-md bg-[#f8f5ff]">
         <DialogHeader>
           <DialogTitle>Claim Proposal</DialogTitle>
           <DialogDescription>
