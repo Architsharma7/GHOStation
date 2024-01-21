@@ -7,9 +7,14 @@ import {
   TableHeader,
   TableRow,
 } from "@/components/ui/table";
-import { Card, CardDescription, CardTitle } from "@/components/ui/card";
 import { fetchPremiumTransaction } from "@/utils/transactions";
 import { useAccount } from "wagmi";
+import {
+  Card,
+  CardDescription,
+  CardHeader,
+  CardTitle,
+} from "@/components/ui/card";
 
 export default function PremiumHistory() {
   const [premiumData, setPremiumData] = useState<any>();
@@ -29,11 +34,15 @@ export default function PremiumHistory() {
   };
 
   return (
-    <Card className=" border-0 border-neutral-300 shadow-[0_3px_10px_rgb(0,0,0,0.2)] gradient min-h-96 p-6 px-8 rounded-xl space-y-3 ">
-      <CardTitle className=" text-xl font-semibold tracking-wide">
-        Premium Histroy
-      </CardTitle>
-      <CardDescription>Your all the previous premium payments.</CardDescription>
+    <Card className=" border-0 border-neutral-300 shadow-[0_3px_10px_rgb(0,0,0,0.2)] min-h-96 p-6 px-8 rounded-xl space-y-3 ">
+      <CardHeader className="p-0">
+        <CardTitle className=" text-xl font-semibold tracking-wide">
+          Premium Histroy
+        </CardTitle>
+        <CardDescription>
+          Your all the previous premium payments.
+        </CardDescription>
+      </CardHeader>
 
       <Table className="mt-4 w-full  ">
         <TableHeader className=" ">

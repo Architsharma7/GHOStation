@@ -27,21 +27,22 @@ export default function Company() {
   return (
     <div className="min-h-screen space-y-8">
       {/* border-b border-neutral-300 */}
-      <Card className=" bg-white flex items-center justify-between p-6 border-0 shadow-[0_3px_10px_rgb(0,0,0,0.2)]">
-        <CardTitle className=" text-xl font-semibold tracking-wide">
-          Get Insured
-        </CardTitle>
-        <CreateCompany />
-      </Card>
-
-      <div className=" grid grid-cols-12 gap-10">
-        <div className=" col-span-6">
-          <CreateProposal />
+      <div className=" w-full flex items-center justify-between">
+        <div className=" text-2xl font-semibold tracking-wide">Get Insured</div>
+        <CreateProposal />
+      </div>
+      <div className=" flex items-stretch gap-10 justify-between">
+        <div className=" w-full">
+          <CreateCompany />
+          {/* <RegisteredCompanyDetails /> */}
         </div>
-        <div className=" col-span-6">
+        <div className=" w-full">
           <DepositPremium />
         </div>
-        <div className=" col-span-6">
+      </div>
+
+      <div className=" grid grid-cols-12 gap-10">
+        <div className=" col-span-12">
           <PremiumHistory />
         </div>
       </div>
